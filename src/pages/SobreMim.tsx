@@ -2,16 +2,18 @@ import React from 'react';
 import Header from '../components/Header/header';
 import DefaultLayout from '../Layouts/default';
 import { LuLayoutDashboard } from "react-icons/lu";
+import { useGetUsers } from '../hooks/useGet/useGetUsers';
 import { MdContacts, MdOutlineComputer } from "react-icons/md";
 import { TbApi } from "react-icons/tb";
 import { IoLogoVue, IoBusiness } from "react-icons/io5";
 import { FaGraduationCap } from "react-icons/fa6";
 import { AiFillBank } from "react-icons/ai";
 import { SiTypescript, SiJavascript, SiTailwindcss, SiHtml5, SiAltiumdesigner, } from "react-icons/si";
-import { FaLinkedinIn, FaCss3, FaGit, FaReact } from "react-icons/fa";
+import { FaLinkedinIn, FaCss3, FaGit, FaReact, FaMapMarkerAlt, FaGithub } from "react-icons/fa";
 
 const SobreMim: React.FC = () => {
    const baseUrl = import.meta.env.BASE_URL;
+  const { user, loading } = useGetUsers('RamonDark2');
 
 const skills = [
     { name: 'Vue.js', icon: <IoLogoVue className="w-8 h-8" />, color: 'from-green-500/20 to-emerald-500/20 border-green-500/50 text-green-600' },
@@ -34,7 +36,6 @@ const skills = [
       <DefaultLayout>
         {/* Hero Section */}
         <section className="relative min-h-screen flex items-center justify-center px-4 py-20">
-          {/* Background Image */}
           <div 
             className="absolute inset-0 opacity-60"
             style={{
@@ -49,24 +50,44 @@ const skills = [
               {/* Left Column - Photo & Name */}
               <div className="text-center md:text-left">
                 <div className="relative inline-block mb-8">
+                  {/* Avatar: usa GitHub se carregado, senão a foto local */}
                   <div className="w-64 h-64 rounded-full overflow-hidden border-8 border-white shadow-2xl mx-auto md:mx-0">
-                    <img 
-                      src={`${baseUrl}img/FotoPerfil_Linkedin.png`}
-                      alt="Ramon Rodrigues"
-                      className="w-full h-full object-cover"
-                    />
+                    {loading ? (
+                      <div className="w-full h-full bg-blue-800 animate-pulse" />
+                    ) : (
+                      <img 
+                        src={user?.avatar_url ?? `${baseUrl}img/FotoPerfil_Linkedin.png`}
+                        alt={user?.name ?? 'Ramon Rodrigues'}
+                        className="w-full h-full object-cover"
+                      />
+                    )}
                   </div>
-                  <div className="absolute bottom-4 right-6  bg-green-500 w-10 h-10 rounded-full flex items-center justify-center shadow-lg border-4 border-white">
+                  <div className="absolute bottom-4 right-6 bg-green-500 w-10 h-10 rounded-full flex items-center justify-center shadow-lg border-4 border-white">
                     <span className="text-white text-2xl">✓</span>
                   </div>
                 </div>
                 
                 <h1 className="text-5xl md:text-6xl font-bold text-white mb-4">
-                  Ramon Rodrigues
+                  {loading ? 'Carregando...' : (user?.name ?? 'Ramon Rodrigues')}
                 </h1>
-                <p className="text-2xl text-blue-200 mb-6">
+                <p className="text-2xl text-blue-200 mb-2">
                   Desenvolvedor Front-End
                 </p>
+
+                {/* Localização e stats do GitHub */}
+                {!loading && user && (
+                  <div className="flex flex-wrap gap-4 justify-center md:justify-start mb-4 text-blue-200 text-sm">
+                    {user.location && (
+                      <span className="flex items-center gap-1">
+                        <FaMapMarkerAlt /> {user.location}
+                      </span>
+                    )}
+                    <span className="flex items-center gap-1">
+                      <FaGithub /> {user.public_repos} repositórios
+                    </span>
+                    <span>{user.followers} seguidores</span>
+                  </div>
+                )}
                 
                 <div className="flex flex-wrap gap-4 justify-center md:justify-start">
                   <a 
@@ -76,12 +97,20 @@ const skills = [
                     <MdContacts className="inline w-6 h-6 min-w-5 min-h-5 mr-2" /> Contato
                   </a>
                   <a 
+                    href={user?.html_url ?? 'https://github.com/RamonDark2'}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-gray-800 text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-900 transition-all duration-300 shadow-lg hover:shadow-xl"
+                  >
+                    <FaGithub className="inline w-5 h-5 mr-2" /> GitHub
+                  </a>
+                  <a 
                     href="https://www.linkedin.com/in/ramon-rodrigues-48459721b/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl"
                   >
-                    <FaLinkedinIn className="inline w-6 h-6 min-w-5 min-h-5 mr-2" />     LinkedIn
+                    <FaLinkedinIn className="inline w-6 h-6 min-w-5 min-h-5 mr-2" /> LinkedIn
                   </a>
                 </div>
               </div>
@@ -92,12 +121,35 @@ const skills = [
                   Resumo Profissional
                 </h2>
                 <p className="text-blue-100 leading-relaxed">
+                  {loading
+                    ? 'Carregando...'
+                    : user?.bio ?? 'Desenvolvedor Front-End com experiência em desenvolvimento de aplicações web para sistemas governamentais.'
+                  }
+                </p>
+                <p className="text-blue-100 leading-relaxed mt-5 border-t border-white/20 pt-5">
                   Desenvolvedor Front-End com experiência em desenvolvimento de aplicações web 
                   para sistemas governamentais e plataformas de gestão interna. Atuação em projetos 
                   oficiais para a Prefeitura de Teresina – PI, com foco em usabilidade, performance, 
                   segurança da informação e análise de dados administrativos. Forte domínio de <strong>Vue.js</strong>, <strong>React.js</strong>, 
                   TypeScript, JavaScript e Tailwind CSS.
                 </p>
+                {/* Stats */}
+                {!loading && user && (
+                  <div className="flex gap-8 mt-6 pt-6 border-t border-white/20">
+                    <div className="text-center">
+                      <p className="text-3xl font-bold text-white">{user.public_repos}</p>
+                      <p className="text-blue-300 text-sm">Repositórios</p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-3xl font-bold text-white">{user.followers}</p>
+                      <p className="text-blue-300 text-sm">Seguidores</p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-3xl font-bold text-white">{user.following}</p>
+                      <p className="text-blue-300 text-sm">Seguindo</p>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -116,7 +168,7 @@ const skills = [
                   key={SobreMim}
                   className={`relative bg-gradient-to-br ${skill.color} backdrop-blur-sm rounded-xl p-6 text-center
                     hover:scale-105 transition-all duration-300 border animate-float group cursor-pointer`}
-                  style={{ animationDelay: `${SobreMim * 0.1}s` }}
+                  style={{ animationDelay: `${SobreMim * 0.5}s` }}
                 >
                   <div className={`mb-3 flex justify-center ${skill.color.split(' ').pop()}`}>
                     {skill.icon}

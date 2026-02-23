@@ -1,5 +1,3 @@
-// components/Router/Link.tsx
-
 import React, { MouseEvent, ReactNode } from 'react';
 import { useRouter } from '../../hooks/useRouter';
 

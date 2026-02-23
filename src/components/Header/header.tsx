@@ -20,9 +20,7 @@ function Header(){
 
 const handleNavigate = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
   e.preventDefault();
-  console.log('🟢 Navegando para:', path);
   
-  // ✅ DIRETO, sem navigate() customizado
   window.location.hash = path;
 };
   
@@ -53,7 +51,7 @@ const handleNavigate = (e: React.MouseEvent<HTMLAnchorElement>, path: string) =>
         </div>
       </div>
 
-      <div className='flex justify-center items-center space-x-6 lg:space-x-10 md:pr-[8.5rem] text-white text-base'>
+      <div className='flex justify-center items-center space-x-6 md:space-x-7 lg:space-x-10 pr-0 lg:pr-[8.5rem] text-white text-base'>
         {/* Link externo - mantém href normal */}
         <a 
           target='_blank' 
