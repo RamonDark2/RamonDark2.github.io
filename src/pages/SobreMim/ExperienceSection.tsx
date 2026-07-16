@@ -1,0 +1,49 @@
+import { motion } from 'framer-motion'
+import { experience } from './data'
+
+function ExperienceSection() {
+  return (
+    <section className="bg-neutral-50 px-6 py-24 dark:bg-neutral-950">
+      <div className="mx-auto max-w-5xl">
+        <h2 className="mb-16 font-heading text-4xl font-bold text-neutral-900 dark:text-neutral-50 sm:text-5xl">
+          Experiência Profissional
+        </h2>
+
+        {experience.map((item) => (
+          <motion.div
+            key={item.company}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6 }}
+            className="mb-8 rounded-2xl border-l-4 border-neutral-900 bg-white p-8 shadow-sm last:mb-0 dark:border-amber-300 dark:bg-neutral-900"
+          >
+            <h3 className="font-heading text-2xl font-bold text-neutral-900 dark:text-neutral-50">
+              {item.company}
+            </h3>
+            <p className="mt-1 font-sans font-semibold text-neutral-700 dark:text-amber-300">
+              {item.role}
+            </p>
+            <p className="mt-1 font-sans text-sm text-neutral-500 dark:text-neutral-400">
+              {item.location} · {item.period}
+            </p>
+            <p className="mt-6 font-sans text-neutral-700 dark:text-neutral-300">{item.summary}</p>
+            <ul className="mt-6 space-y-3">
+              {item.highlights.map((highlight) => (
+                <li
+                  key={highlight}
+                  className="flex items-start gap-3 font-sans text-sm text-neutral-700 dark:text-neutral-300"
+                >
+                  <span className="mt-1 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-neutral-900 dark:bg-amber-300" />
+                  <span>{highlight}</span>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+export default ExperienceSection
