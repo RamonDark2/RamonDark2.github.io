@@ -3,11 +3,10 @@ import { RouteConfig } from './types/router.types';
 import Middlewares from './middleware/index';
 
 // Importar páginas
-import Home from './pages/Home';
+import SobreMim from './pages/SobreMim';
 import Login from './pages/Login';
 import NotFound from './pages/NotFound';
 import ErrorPage from './pages/ErrorPage';
-import SobreMim from './pages/SobreMim';
 
 const routes: RouteConfig[] = [
   {
@@ -18,7 +17,7 @@ const routes: RouteConfig[] = [
       Middlewares.scrollToTop,
       Middlewares.setMeta({
         title: 'Meu Portfolio',
-        description: 'Portfólio pessoal de Ramon Rodrigues - Desenvolvedor Front-End',
+        description: 'Portfólio pessoal de Ramon Rodrigues - Desenvolvedor Full Stack',
       }),
     ],
   },
@@ -27,16 +26,8 @@ const routes: RouteConfig[] = [
     path: '/login',
     component: Login,
     middlewares: [
-      Middlewares.guest, 
+      Middlewares.guest,
       Middlewares.setMeta({ title: 'Login' }),
-    ],
-  },
-
-  {
-    path: '/landing-page',
-    component: Home,
-    middlewares: [
-      Middlewares.setMeta({ title: 'Landing Page' }),
     ],
   },
 ];
