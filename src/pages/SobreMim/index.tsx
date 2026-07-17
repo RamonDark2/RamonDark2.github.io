@@ -6,6 +6,7 @@ import ExperienceSection from '../../components/ExperienceSection/ExperienceSect
 import ProjectsSection from '../../components/ProjectsSection/ProjectsSection'
 import EcommerceExperienceSection from '../../components/EcommerceExperienceSection/EcommerceExperienceSection'
 import EcommerceSkillsSection from '../../components/EcommerceSkillsSection/EcommerceSkillsSection'
+import TalkSection from '../../components/TalkSection/TalkSection'
 import ContactSection from '../../components/ContactSection/ContactSection'
 
 function SobreMim() {
@@ -18,6 +19,7 @@ function SobreMim() {
       <ProjectsSection />
       <EcommerceExperienceSection />
       <EcommerceSkillsSection />
+      <TalkSection />
       <ContactSection />
     </DefaultLayout>
   )
