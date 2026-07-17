@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { projects } from './data'
+import { projects } from '../../data/sobreMim'
 
 function ProjectsSection() {
   return (

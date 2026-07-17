@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import DefaultLayout from '../Layouts/default';
-import Header from '../components/Header/header';
-import useRouter from '../hooks/useRouter';
+import DefaultLayout from '../../Layouts/default';
+import Header from '../../components/Header/Header';
+import useRouter from '../../hooks/useRouter';
 import { FaLongArrowAltRight } from 'react-icons/fa';
-import { RouteContext } from '../types/router.types';
-import SerraImg from '../../public/img/Serra.jpeg'
+import { RouteContext } from '../../types/router.types';
+import SerraImg from '../../../public/img/Serra.jpeg'
 
 interface LoginProps {
   context: RouteContext;

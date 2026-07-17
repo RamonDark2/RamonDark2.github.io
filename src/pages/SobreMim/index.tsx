@@ -1,9 +1,9 @@
 import DefaultLayout from '../../Layouts/default'
-import Hero from './Hero'
-import SkillsSection from './SkillsSection'
-import ExperienceSection from './ExperienceSection'
-import ProjectsSection from './ProjectsSection'
-import ContactSection from './ContactSection'
+import Hero from '../../components/Hero/Hero'
+import SkillsSection from '../../components/SkillsSection/SkillsSection'
+import ExperienceSection from '../../components/ExperienceSection/ExperienceSection'
+import ProjectsSection from '../../components/ProjectsSection/ProjectsSection'
+import ContactSection from '../../components/ContactSection/ContactSection'
 
 function SobreMim() {
   return (

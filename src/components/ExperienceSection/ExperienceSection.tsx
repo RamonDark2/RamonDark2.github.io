@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { experience } from './data'
+import { experience } from '../../data/sobreMim'
 
 function ExperienceSection() {
   return (

@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { skills } from './data'
+import { skills } from '../../data/sobreMim'
 
 const categories = ['Frontend', 'Backend', 'Infraestrutura & Práticas'] as const
 

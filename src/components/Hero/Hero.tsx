@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { useGetUsers } from '../../hooks/useGet/useGetUsers'
-import Header from '../../components/Header/header'
-import { GITHUB_USERNAME } from './data'
+import Header from '../Header/Header'
+import { GITHUB_USERNAME } from '../../data/sobreMim'
 
 const baseUrl = import.meta.env.BASE_URL
 const avatarSrc = `${baseUrl}img/FotoPerfil_Linkedin.png`

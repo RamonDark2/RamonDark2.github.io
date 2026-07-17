@@ -1,5 +1,5 @@
 import React from 'react';
-import Link from '../components/Router/Link';
+import Link from '../../components/Router/Link';
 
 const NotFound: React.FC = () => {
   return (
