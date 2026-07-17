@@ -21,7 +21,15 @@ function ProjectsSection() {
                 transition={{ duration: 0.5 }}
                 className="flex flex-col rounded-2xl border border-neutral-200 p-8 transition-transform hover:-translate-y-1 dark:border-neutral-800"
               >
-                <Icon className="mb-6 h-10 w-10 text-neutral-900 dark:text-amber-300" />
+                {project.image ? (
+                  <img
+                    src={project.image}
+                    alt={project.name}
+                    className="mb-6 h-40 w-full rounded-xl object-cover object-top"
+                  />
+                ) : (
+                  <Icon className="mb-6 h-10 w-10 text-neutral-900 dark:text-amber-300" />
+                )}
                 <h3 className="font-heading text-xl font-bold text-neutral-900 dark:text-neutral-50">
                   {project.name}
                 </h3>
