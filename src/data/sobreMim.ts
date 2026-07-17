@@ -4,10 +4,12 @@ import {
   Braces,
   Briefcase,
   Cloud,
+  Component,
   Container,
   Database,
   GitBranch,
   GraduationCap,
+  Hexagon,
   Landmark,
   Layers,
   Network,
@@ -16,6 +18,8 @@ import {
   Triangle,
   Zap,
 } from 'lucide-react'
+
+const baseUrl = import.meta.env.BASE_URL
 
 export const GITHUB_USERNAME = 'RamonDark2'
 
@@ -27,9 +31,11 @@ export interface Skill {
 
 export const skills: Skill[] = [
   { category: 'Frontend', name: 'React', icon: Atom },
+  { category: 'Frontend', name: 'Vue.js', icon: Component },
   { category: 'Frontend', name: 'Next.js', icon: Triangle },
   { category: 'Frontend', name: 'React Native + TypeScript', icon: Smartphone },
   { category: 'Frontend', name: 'TypeScript', icon: Braces },
+  { category: 'Backend', name: 'Node.js', icon: Hexagon },
   { category: 'Backend', name: 'NestJS', icon: Server },
   { category: 'Backend', name: 'Python / FastAPI', icon: Zap },
   { category: 'Backend', name: 'ORM / Prisma', icon: Layers },
@@ -74,16 +80,18 @@ export interface Project {
   icon: LucideIcon
   tag: string | null
   url: string | null
+  image?: string
 }
 
 export const projects: Project[] = [
   {
-    name: 'Portal da Empregabilidade',
+    name: 'Emprega Teresina',
     description:
       'Plataforma para cadastro de empresas (CNPJ/MEI) e cidadãos, divulgação de vagas de emprego e produtos, com painel administrativo para análise de usuários ativos e encaminhamentos para vagas.',
     icon: Briefcase,
     tag: null,
     url: 'https://emprega.teresina.pi.gov.br/',
+    image: `${baseUrl}img/Macbook-Air-emprega.teresina.pi.gov.br.png`,
   },
   {
     name: 'Certificado Escolar Digital',
@@ -98,7 +106,93 @@ export const projects: Project[] = [
     description:
       'Sistema de gestão interna para entidades de bairro, com cadastro e aprovação de entidades, vinculação de pessoas, controle de vigência, agendamento de assembleias, envio de atas e votações.',
     icon: Landmark,
-    tag: 'Em andamento',
-    url: null,
+    tag: 'Prefeitura de Teresina',
+    url: 'https://op.teresina.pi.gov.br/sobre',
+    image: `${baseUrl}img/Macbook-Air-op.teresina.pi.gov.br.png`,
   },
 ]
+
+export interface AboutContent {
+  heading: string
+  paragraphs: string[]
+}
+
+export const about: AboutContent = {
+  heading: 'Desenvolvimento de aplicações completas, seguras e escaláveis',
+  paragraphs: [
+    'Sou Desenvolvedor Full Stack com experiência na construção e manutenção de aplicações web, atuando desde o desenvolvimento de interfaces responsivas até a criação e integração de APIs, bancos de dados, autenticação, infraestrutura e deploy.',
+    'Atualmente trabalho na Prodater — Soluções em Tecnologia da Informação, participando do desenvolvimento de sistemas para a Prefeitura de Teresina e de soluções internas de gestão administrativa.',
+    'Minha atuação envolve desenvolvimento com Vue.js, React, Next.js, TypeScript, JavaScript e Tailwind CSS, criação de dashboards administrativos, integração com APIs REST e implementação de funcionalidades para gerenciamento de usuários, permissões e vigência de vínculos.',
+    'Também possuo experiência como freelancer no desenvolvimento frontend para e-commerces, realizando criação e personalização de interfaces, implementação de layouts responsivos, ajustes na experiência do usuário e integração de componentes em lojas virtuais.',
+    'No backend, tenho experiência com Node.js, NestJS, Python, FastAPI, Prisma e PostgreSQL, incluindo implementação de regras de negócio, autenticação com JWT, renovação de sessão com refresh token, validação de dados e controle de acesso baseado em perfis.',
+    'Participo de processos de Code Review, contribuindo para a padronização, segurança, manutenção e evolução das aplicações.',
+    'Tenho experiência com Docker, CI/CD, Git e deploy de aplicações, além da utilização de estratégias de componentização e organização de interfaces baseadas em princípios como Atomic Design.',
+  ],
+}
+
+export interface ComplementaryExperience {
+  title: string
+  role: string
+  summary: string
+  highlights: string[]
+  image: string
+  imageCaption: string
+}
+
+export const ecommerceExperience: ComplementaryExperience = {
+  title: 'Desenvolvimento Frontend para E-commerces',
+  role: 'Desenvolvedor Frontend Freelancer',
+  summary:
+    'Atuação em projetos de desenvolvimento, personalização e manutenção de interfaces para lojas virtuais.',
+  highlights: [
+    'Desenvolvimento e personalização de páginas de e-commerce',
+    'Implementação de layouts responsivos para dispositivos móveis e desktops',
+    'Criação e adaptação de componentes visuais',
+    'Ajustes em páginas de produtos, carrinho e etapas de compra',
+    'Melhoria da usabilidade e da experiência do usuário',
+    'Correção de problemas de layout e responsividade',
+    'Implementação de interfaces com HTML, CSS, JavaScript e tecnologias modernas de frontend',
+    'Adaptação de layouts conforme a identidade visual das marcas',
+    'Integração de elementos visuais e componentes em plataformas de comércio eletrônico',
+    'Manutenção e evolução de lojas virtuais existentes',
+  ],
+  image: `${baseUrl}img/Macbook-Air-prolimgel.lojavirtualnuvem.com.br.png`,
+  imageCaption: 'Prolimgel — loja virtual',
+}
+
+export const ecommerceSkills: string[] = [
+  'Desenvolvimento frontend para e-commerces',
+  'Personalização de lojas virtuais',
+  'Interfaces responsivas',
+  'Experiência do usuário aplicada a lojas online',
+  'Páginas de produtos',
+  'Carrinho de compras',
+  'Fluxos de checkout',
+  'Manutenção de interfaces',
+  'Adaptação de identidade visual',
+  'Correção de problemas de layout',
+  'Otimização da navegação em dispositivos móveis',
+]
+
+export interface Talk {
+  title: string
+  description: string
+  url: string
+  linkLabel: string
+  mockupImage: string
+  photos: string[]
+}
+
+export const talk: Talk = {
+  title: 'Palestra: Desenvolvimento Mobile Multiplataforma',
+  description:
+    'Experiência no compartilhamento de conhecimento técnico, incluindo a apresentação de palestra sobre desenvolvimento mobile, abordando tecnologias multiplataforma, arquitetura, integração com APIs e boas práticas para criação de aplicativos.',
+  url: 'https://apresenta-o-react-native.vercel.app/',
+  linkLabel: 'Ver apresentação',
+  mockupImage: `${baseUrl}img/Macbook-Air-apresenta-o-react-native.vercel.app.png`,
+  photos: [
+    `${baseUrl}img/Apresentacao1.jpeg`,
+    `${baseUrl}img/Apresentacao2.jpeg`,
+    `${baseUrl}img/Apresentacao3.jpeg`,
+  ],
+}
