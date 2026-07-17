@@ -83,12 +83,12 @@ function Hero() {
             className="mt-10 flex w-full max-w-5xl flex-col justify-between gap-6 font-sans text-sm text-neutral-600 dark:text-neutral-300 sm:flex-row sm:text-left"
           >
             <p className="sm:max-w-xs">
-              Desenvolvedor Full Stack, atualmente na Prodater — Soluções em TI, disponível para
-              novos projetos.
+              Desenvolvedor Full Stack na Prodater — Soluções em TI, atuando do frontend ao
+              backend, banco de dados e deploy.
             </p>
             <p className="sm:max-w-xs sm:text-right">
-              Focado em construir aplicações completas, do front ao deploy — React, Next.js, Node
-              e Python.
+              Stack principal: Vue.js, React, Next.js, TypeScript, Node.js, NestJS, Python e
+              PostgreSQL.
             </p>
           </motion.div>
 
