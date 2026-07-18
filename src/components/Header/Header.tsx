@@ -1,7 +1,8 @@
-import { Github, Linkedin } from 'lucide-react'
+import { Github, Linkedin, MessageCircle } from 'lucide-react'
 import ThemeToggle from '../ThemeToggle/ThemeToggle'
 
 const EMAIL = 'jalbertramon1@gmail.com'
+const WHATSAPP_URL = 'https://wa.me/86994258329'
 const GITHUB_URL = 'https://github.com/RamonDark2'
 const LINKEDIN_URL = 'https://www.linkedin.com/in/ramon-rodrigues-48459721b/'
 
@@ -16,6 +17,15 @@ function Header() {
       </a>
 
       <div className="flex items-center gap-6">
+        <a
+          href={WHATSAPP_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-2 font-semibold hover:opacity-70"
+        >
+          <MessageCircle className="h-4 w-4" />
+          WhatsApp
+        </a>
         <a
           href={GITHUB_URL}
           target="_blank"
