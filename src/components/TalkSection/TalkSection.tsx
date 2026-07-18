@@ -31,15 +31,22 @@ function TalkSection() {
         </a>
 
         <div className="mt-12 grid gap-6 md:grid-cols-3">
-          <motion.img
+          <motion.a
+            href={talk.url}
+            target="_blank"
+            rel="noopener noreferrer"
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6 }}
-            src={talk.mockupImage}
-            alt={talk.title}
-            className="rounded-xl shadow-lg md:col-span-3"
-          />
+            className="md:col-span-3"
+          >
+            <img
+              src={talk.mockupImage}
+              alt={talk.title}
+              className="w-full drop-shadow-lg transition-opacity hover:opacity-90"
+            />
+          </motion.a>
           {talk.photos.map((photo, index) => (
             <motion.img
               key={photo}

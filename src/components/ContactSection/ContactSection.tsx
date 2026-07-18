@@ -1,8 +1,10 @@
-import { Github, Linkedin, Mail } from 'lucide-react'
+import { Github, Linkedin, Mail, MessageCircle } from 'lucide-react'
 
 const EMAIL = 'jalbertramon1@gmail.com'
 const GITHUB_URL = 'https://github.com/RamonDark2'
 const LINKEDIN_URL = 'https://www.linkedin.com/in/ramon-rodrigues-48459721b/'
+const WHATSAPP_URL = 'https://wa.me/86994258329'
+const WHATSAPP_MESSAGE = 'Olá, Ramon qual o melhor horário para contato?'
 
 function ContactSection() {
   return (
@@ -38,6 +40,15 @@ function ContactSection() {
           >
             <Linkedin className="h-5 w-5" />
             LinkedIn
+          </a>
+          <a
+            href={`${WHATSAPP_URL}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-3 rounded-xl border border-white px-6 py-3 font-sans font-semibold transition-transform hover:-translate-y-0.5"
+          >
+            <MessageCircle className="h-5 w-5" />
+            WhatsApp
           </a>
         </div>
       </div>

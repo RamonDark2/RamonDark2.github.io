@@ -22,11 +22,21 @@ function ProjectsSection() {
                 className="flex flex-col rounded-2xl border border-neutral-200 p-8 transition-transform hover:-translate-y-1 dark:border-neutral-800"
               >
                 {project.image ? (
-                  <img
-                    src={project.image}
-                    alt={project.name}
-                    className="mb-6 h-40 w-full rounded-xl object-cover object-top"
-                  />
+                  project.url ? (
+                    <a href={project.url} target="_blank" rel="noopener noreferrer">
+                      <img
+                        src={project.image}
+                        alt={project.name}
+                        className="mb-6 h-40 w-full rounded-xl object-cover object-top transition-opacity hover:opacity-90"
+                      />
+                    </a>
+                  ) : (
+                    <img
+                      src={project.image}
+                      alt={project.name}
+                      className="mb-6 h-40 w-full rounded-xl object-cover object-top"
+                    />
+                  )
                 ) : (
                   <Icon className="mb-6 h-10 w-10 text-neutral-900 dark:text-amber-300" />
                 )}

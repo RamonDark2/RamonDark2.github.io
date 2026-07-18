@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { Hand } from 'lucide-react'
 import { useGetUsers } from '../../hooks/useGet/useGetUsers'
 import Header from '../Header/Header'
 import { GITHUB_USERNAME } from '../../data/sobreMim'
@@ -63,7 +64,14 @@ function Hero() {
             RAMON
           </motion.h1>
 
-          <motion.div variants={itemVariants} className="relative my-2 sm:my-4">
+          <motion.div variants={itemVariants} className="group relative my-2 sm:my-4">
+            <div className="pointer-events-none absolute bottom-full left-1/2 z-20 mb-3 -translate-x-1/2 translate-y-1 opacity-0 transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100">
+              <div className="flex items-center gap-2 whitespace-nowrap rounded-full bg-neutral-900 px-4 py-2 font-sans text-sm font-medium text-white shadow-lg dark:bg-white dark:text-neutral-900">
+                <Hand className="h-4 w-4" />
+                Olá!
+              </div>
+              <div className="absolute left-1/2 top-full h-2 w-2 -translate-x-1/2 -translate-y-1/2 rotate-45 bg-neutral-900 dark:bg-white" />
+            </div>
             <img
               src={avatarSrc}
               alt="Ramon Rodrigues"

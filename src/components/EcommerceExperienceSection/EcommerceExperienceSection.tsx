@@ -43,7 +43,7 @@ function EcommerceExperienceSection() {
             <img
               src={ecommerceExperience.image}
               alt={ecommerceExperience.imageCaption}
-              className="w-full rounded-xl shadow-lg"
+              className="w-full drop-shadow-lg"
             />
             <p className="mt-3 text-center font-sans text-xs uppercase tracking-widest text-neutral-500 dark:text-neutral-400">
               {ecommerceExperience.imageCaption}
