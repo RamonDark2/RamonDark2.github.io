@@ -95,6 +95,15 @@ export const projects: Project[] = [
     image: `${baseUrl}img/Macbook-Air-emprega.teresina.pi.gov.br.png`,
   },
   {
+    name: 'Casamento Design',
+    description:
+      'Template de site para casamentos, com contagem regressiva para o grande dia, galeria de fotos, guia de dress code, confirmação de presença (RSVP) e lista de presentes com integração via Pix.',
+    icon: Heart,
+    tag: 'Projeto pessoal',
+    url: 'https://casamento-design.vercel.app/',
+    image: `${baseUrl}img/Macbook-Air-casamento-design.vercel.app.png`,
+  },
+  {
     name: 'Certificado Escolar Digital',
     description:
       'Sistema oficial para emissão e download de certificados de conclusão e históricos escolares de alunos que concluíram o Ensino Médio nos últimos 4 anos.',
@@ -111,15 +120,6 @@ export const projects: Project[] = [
     tag: 'Prefeitura de Teresina',
     url: 'https://op.teresina.pi.gov.br/sobre',
     image: `${baseUrl}img/Macbook-Air-op.teresina.pi.gov.br.png`,
-  },
-  {
-    name: 'Casamento Design',
-    description:
-      'Template de site para casamentos, com contagem regressiva para o grande dia, galeria de fotos, guia de dress code, confirmação de presença (RSVP) e lista de presentes com integração via Pix.',
-    icon: Heart,
-    tag: 'Projeto pessoal',
-    url: 'https://casamento-design.vercel.app/',
-    image: `${baseUrl}img/Macbook-Air-casamento-design.vercel.app.png`,
   },
 ]
 
