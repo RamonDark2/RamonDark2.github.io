@@ -90,7 +90,7 @@ export const projects: Project[] = [
     description:
       'Plataforma para cadastro de empresas (CNPJ/MEI) e cidadãos, divulgação de vagas de emprego e produtos, com painel administrativo para análise de usuários ativos e encaminhamentos para vagas.',
     icon: Briefcase,
-    tag: null,
+    tag: 'Prefeitura de Teresina',
     url: 'https://emprega.teresina.pi.gov.br/',
     image: `${baseUrl}img/Macbook-Air-emprega.teresina.pi.gov.br.png`,
   },
