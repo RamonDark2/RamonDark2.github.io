@@ -23,30 +23,23 @@ function ProjectsSection() {
               >
                 {project.image ? (
                   project.url ? (
-                    <a
-                      href={project.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mb-6 block overflow-hidden rounded-xl"
-                    >
+                    <a href={project.url} target="_blank" rel="noopener noreferrer" className="mb-6 block">
                       <img
                         src={project.image}
                         alt={project.name}
                         loading="lazy"
                         decoding="async"
-                        className="h-52 w-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-105"
+                        className="w-full drop-shadow-lg transition-transform duration-500 ease-out group-hover:scale-[1.03]"
                       />
                     </a>
                   ) : (
-                    <div className="mb-6 overflow-hidden rounded-xl">
-                      <img
-                        src={project.image}
-                        alt={project.name}
-                        loading="lazy"
-                        decoding="async"
-                        className="h-52 w-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-105"
-                      />
-                    </div>
+                    <img
+                      src={project.image}
+                      alt={project.name}
+                      loading="lazy"
+                      decoding="async"
+                      className="mb-6 w-full drop-shadow-lg transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+                    />
                   )
                 ) : (
                   <Icon className="mb-6 h-10 w-10 text-neutral-900 transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-110 dark:text-amber-300" />
