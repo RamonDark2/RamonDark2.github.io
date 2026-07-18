@@ -1,6 +1,9 @@
 import { Github, Linkedin, Mail, MessageCircle } from 'lucide-react'
 import { CURSOR_FILL_LIGHT_CLASSNAME } from '../../styles/cursorFill'
 
+const baseUrl = import.meta.env.BASE_URL
+const wavingPhotoSrc = `${baseUrl}img/Ola.png`
+
 const EMAIL = 'jalbertramon1@gmail.com'
 const GITHUB_URL = 'https://github.com/RamonDark2'
 const LINKEDIN_URL = 'https://www.linkedin.com/in/ramon-rodrigues-48459721b/'
@@ -11,6 +14,11 @@ function ContactSection() {
   return (
     <section className="bg-neutral-900 px-6 py-24 text-white dark:bg-black">
       <div className="mx-auto flex max-w-5xl flex-col items-center text-center">
+        <img
+          src={wavingPhotoSrc}
+          alt="Ramon Rodrigues acenando"
+          className="mb-6 h-24 w-24 rounded-full object-cover object-top shadow-xl sm:h-28 sm:w-28"
+        />
         <h2 className="font-heading text-4xl font-bold sm:text-5xl">Vamos trabalhar juntos?</h2>
         <p className="mt-4 font-sans text-neutral-300">
           Estou disponível para novos projetos e oportunidades

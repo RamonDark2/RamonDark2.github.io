@@ -75,7 +75,7 @@ function Hero() {
             <img
               src={avatarSrc}
               alt="Ramon Rodrigues"
-              className="h-24 w-24 rounded-2xl object-cover shadow-2xl transition-transform hover:scale-105 sm:h-32 sm:w-32"
+              className="h-24 w-24 rounded-2xl object-cover object-top shadow-2xl transition-transform hover:scale-105 sm:h-32 sm:w-32"
             />
           </motion.div>
 
