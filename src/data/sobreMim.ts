@@ -59,9 +59,9 @@ export interface ExperienceItem {
 export const experience: ExperienceItem[] = [
   {
     company: 'Prodater – Soluções em Tecnologia da Informação',
-    role: 'Desenvolvedor Full Stack',
+    role: 'Desenvolvedor Frontend',
     location: 'Teresina – PI',
-    period: 'Atual',
+    period: '2 anos',
     summary:
       'Atuação no desenvolvimento de sistemas web para a Prefeitura de Teresina e projetos internos de gestão administrativa.',
     highlights: [
