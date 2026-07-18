@@ -1,13 +1,12 @@
 import { motion } from 'framer-motion'
 import { experience } from '../../data/sobreMim'
+import SectionHeading from '../SectionHeading/SectionHeading'
 
 function ExperienceSection() {
   return (
-    <section className="bg-neutral-50 px-6 py-24 dark:bg-neutral-950">
+    <section id="experiencia" className="bg-neutral-50 px-6 py-24 dark:bg-neutral-950">
       <div className="mx-auto max-w-5xl">
-        <h2 className="mb-16 font-heading text-4xl font-bold text-neutral-900 dark:text-neutral-50 sm:text-5xl">
-          Experiência Profissional
-        </h2>
+        <SectionHeading eyebrow="03 · Trajetória" title="Experiência Profissional" className="mb-16" />
 
         {experience.map((item) => (
           <motion.div

@@ -2,20 +2,13 @@ import { motion } from 'framer-motion'
 import { ExternalLink } from 'lucide-react'
 import { talk } from '../../data/sobreMim'
 import { CURSOR_FILL_CLASSNAME } from '../../styles/cursorFill'
+import SectionHeading from '../SectionHeading/SectionHeading'
 
 function TalkSection() {
   return (
     <section className="bg-neutral-50 px-6 py-24 dark:bg-neutral-950">
       <div className="mx-auto max-w-5xl">
-        <motion.h2
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.6 }}
-          className="font-heading text-4xl font-bold text-neutral-900 dark:text-neutral-50 sm:text-5xl"
-        >
-          {talk.title}
-        </motion.h2>
+        <SectionHeading eyebrow="07 · Palestra" title={talk.title} className="mb-0" />
 
         <p className="mt-6 max-w-3xl font-sans text-neutral-700 dark:text-neutral-300">
           {talk.description}

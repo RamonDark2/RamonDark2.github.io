@@ -7,6 +7,21 @@ const WHATSAPP_URL = 'https://wa.me/86994258329'
 const GITHUB_URL = 'https://github.com/RamonDark2'
 const LINKEDIN_URL = 'https://www.linkedin.com/in/ramon-rodrigues-48459721b/'
 
+// Navegação por scroll suave via scrollIntoView — nunca por href="#...":
+// o router do site é baseado em hash, e mudar o hash dispararia o
+// roteamento (caindo na página 404).
+const NAV_ITEMS = [
+  { label: 'Sobre', target: 'sobre' },
+  { label: 'Competências', target: 'competencias' },
+  { label: 'Experiência', target: 'experiencia' },
+  { label: 'Projetos', target: 'projetos' },
+  { label: 'Contato', target: 'contato' },
+]
+
+function scrollToSection(target: string) {
+  document.getElementById(target)?.scrollIntoView({ behavior: 'smooth' })
+}
+
 function Header() {
   return (
     <header className="flex w-full flex-col items-center gap-4 px-6 py-6 font-sans text-sm text-neutral-900 dark:text-neutral-50 md:flex-row md:justify-between">
@@ -16,6 +31,19 @@ function Header() {
       >
         Fale comigo
       </a>
+
+      <nav className="hidden items-center gap-5 lg:flex">
+        {NAV_ITEMS.map((item) => (
+          <button
+            key={item.target}
+            type="button"
+            onClick={() => scrollToSection(item.target)}
+            className={`font-sans text-sm font-medium text-neutral-600 dark:text-neutral-400 ${CURSOR_FILL_CLASSNAME}`}
+          >
+            {item.label}
+          </button>
+        ))}
+      </nav>
 
       <div className="flex items-center gap-6">
         <a

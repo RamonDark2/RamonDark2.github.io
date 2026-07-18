@@ -191,7 +191,7 @@ export interface Talk {
 }
 
 export const talk: Talk = {
-  title: 'Palestra: Desenvolvimento Mobile Multiplataforma',
+  title: 'Desenvolvimento Mobile Multiplataforma',
   description:
     'Experiência no compartilhamento de conhecimento técnico, incluindo a apresentação de palestra sobre desenvolvimento mobile, abordando tecnologias multiplataforma, arquitetura, integração com APIs e boas práticas para criação de aplicativos.',
   url: 'https://apresenta-o-react-native.vercel.app/',

@@ -1,13 +1,16 @@
 import { motion } from 'framer-motion'
 import { ecommerceExperience } from '../../data/sobreMim'
+import SectionHeading from '../SectionHeading/SectionHeading'
 
 function EcommerceExperienceSection() {
   return (
     <section className="bg-neutral-50 px-6 py-24 dark:bg-neutral-950">
       <div className="mx-auto max-w-5xl">
-        <h2 className="mb-16 font-heading text-4xl font-bold text-neutral-900 dark:text-neutral-50 sm:text-5xl">
-          Experiência Profissional Complementar
-        </h2>
+        <SectionHeading
+          eyebrow="05 · Freelance"
+          title="Experiência Profissional Complementar"
+          className="mb-16"
+        />
 
         <motion.div
           initial={{ opacity: 0, y: 24 }}

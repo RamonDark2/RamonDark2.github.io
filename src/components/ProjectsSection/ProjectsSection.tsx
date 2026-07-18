@@ -1,14 +1,13 @@
 import { motion } from 'framer-motion'
 import { projects } from '../../data/sobreMim'
 import { CURSOR_FILL_CLASSNAME } from '../../styles/cursorFill'
+import SectionHeading from '../SectionHeading/SectionHeading'
 
 function ProjectsSection() {
   return (
-    <section className="bg-white px-6 py-24 dark:bg-[#0B0B0C]">
+    <section id="projetos" className="bg-white px-6 py-24 dark:bg-[#0B0B0C]">
       <div className="mx-auto max-w-5xl">
-        <h2 className="mb-16 font-heading text-4xl font-bold text-neutral-900 dark:text-neutral-50 sm:text-5xl">
-          Projetos Relevantes
-        </h2>
+        <SectionHeading eyebrow="04 · Portfólio" title="Projetos Relevantes" className="mb-16" />
 
         <div className="grid gap-8 md:grid-cols-3">
           {projects.map((project) => {

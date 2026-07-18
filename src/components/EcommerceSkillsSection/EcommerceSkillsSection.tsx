@@ -1,19 +1,12 @@
 import { motion } from 'framer-motion'
 import { ecommerceSkills } from '../../data/sobreMim'
+import SectionHeading from '../SectionHeading/SectionHeading'
 
 function EcommerceSkillsSection() {
   return (
     <section className="bg-white px-6 py-24 dark:bg-[#0B0B0C]">
       <div className="mx-auto max-w-5xl">
-        <motion.h2
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.6 }}
-          className="mb-16 font-heading text-4xl font-bold text-neutral-900 dark:text-neutral-50 sm:text-5xl"
-        >
-          Competências em E-commerce
-        </motion.h2>
+        <SectionHeading eyebrow="06 · E-commerce" title="Competências em E-commerce" className="mb-16" />
 
         <div className="flex flex-wrap gap-3">
           {ecommerceSkills.map((skill, index) => (

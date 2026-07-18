@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { Github, Linkedin, Mail, MessageCircle } from 'lucide-react'
 import { CURSOR_FILL_LIGHT_CLASSNAME } from '../../styles/cursorFill'
+import SectionHeading from '../SectionHeading/SectionHeading'
 
 const baseUrl = import.meta.env.BASE_URL
 const wavingPhotoSrc = `${baseUrl}img/Ola.png`
@@ -13,7 +14,7 @@ const WHATSAPP_MESSAGE = 'Olá, Ramon qual o melhor horário para contato?'
 
 function ContactSection() {
   return (
-    <section className="bg-neutral-900 px-6 py-24 text-white dark:bg-black">
+    <section id="contato" className="bg-neutral-900 px-6 py-24 text-white dark:bg-black">
       <div className="mx-auto flex max-w-5xl flex-col items-center text-center">
         <motion.img
           initial={{ opacity: 0, scale: 0.7 }}
@@ -24,15 +25,7 @@ function ContactSection() {
           alt="Ramon Rodrigues acenando"
           className="mb-6 h-24 w-24 rounded-full object-cover object-top shadow-xl sm:h-28 sm:w-28"
         />
-        <motion.h2
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="font-heading text-4xl font-bold sm:text-5xl"
-        >
-          Vamos trabalhar juntos?
-        </motion.h2>
+        <SectionHeading eyebrow="08 · Contato" title="Vamos trabalhar juntos?" light center className="mb-0" />
         <motion.p
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}

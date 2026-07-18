@@ -1,21 +1,14 @@
 import { motion } from 'framer-motion'
 import { skills } from '../../data/sobreMim'
+import SectionHeading from '../SectionHeading/SectionHeading'
 
 const categories = ['Frontend', 'Backend', 'Infraestrutura & Práticas'] as const
 
 function SkillsSection() {
   return (
-    <section className="bg-white px-6 py-24 dark:bg-[#0B0B0C]">
+    <section id="competencias" className="bg-white px-6 py-24 dark:bg-[#0B0B0C]">
       <div className="mx-auto max-w-5xl">
-        <motion.h2
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.6 }}
-          className="mb-16 font-heading text-4xl font-bold text-neutral-900 dark:text-neutral-50 sm:text-5xl"
-        >
-          Competências Técnicas
-        </motion.h2>
+        <SectionHeading eyebrow="02 · Stack" title="Competências Técnicas" className="mb-16" />
 
         {categories.map((category) => (
           <div key={category} className="mb-12 last:mb-0">
