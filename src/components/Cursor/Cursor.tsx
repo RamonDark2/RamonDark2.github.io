@@ -4,9 +4,17 @@ import { motion, useMotionValue, useSpring } from 'framer-motion'
 const CURSOR_SIZE = 12
 const IMAGE_LINK_SCALE = 2.2
 const SPRING_CONFIG = { damping: 26, stiffness: 300, mass: 0.5 }
+const SCROLL_IDLE_MS = 120
 
 function Cursor() {
   const [enabled, setEnabled] = useState(false)
+  // mix-blend-mode força o navegador a recompor essa camada contra tudo que
+  // muda por baixo dela — medido em ~1ms a mais por frame e ~1/3 mais frames
+  // perdidos durante o scroll. O mouse normalmente fica parado enquanto a
+  // página rola por baixo dele, então escondê-lo só nesse instante é
+  // imperceptível e evita o custo exatamente quando ele mais pesa.
+  const [scrolling, setScrolling] = useState(false)
+
   const x = useMotionValue(-100)
   const y = useMotionValue(-100)
   const scale = useMotionValue(1)
@@ -51,11 +59,29 @@ function Cursor() {
       scale.set(0)
     }
 
+    let scrollTimeout: ReturnType<typeof setTimeout> | undefined
+    let isScrolling = false
+
+    function handleScroll() {
+      if (!isScrolling) {
+        isScrolling = true
+        setScrolling(true)
+      }
+      clearTimeout(scrollTimeout)
+      scrollTimeout = setTimeout(() => {
+        isScrolling = false
+        setScrolling(false)
+      }, SCROLL_IDLE_MS)
+    }
+
     window.addEventListener('mousemove', handleMouseMove)
     window.addEventListener('mouseover', handleMouseOver)
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => {
       window.removeEventListener('mousemove', handleMouseMove)
       window.removeEventListener('mouseover', handleMouseOver)
+      window.removeEventListener('scroll', handleScroll)
+      clearTimeout(scrollTimeout)
     }
   }, [x, y, scale])
 
@@ -63,8 +89,8 @@ function Cursor() {
 
   return (
     <motion.div
-      className="pointer-events-none fixed left-0 top-0 z-[9999] h-3 w-3 rounded-full bg-white mix-blend-difference"
-      style={{ x: springX, y: springY, scale: springScale }}
+      className="pointer-events-none fixed left-0 top-0 z-[9999] h-3 w-3 rounded-full bg-white mix-blend-difference transition-opacity duration-150"
+      style={{ x: springX, y: springY, scale: springScale, opacity: scrolling ? 0 : 1 }}
     />
   )
 }
