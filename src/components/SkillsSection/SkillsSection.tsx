@@ -6,7 +6,7 @@ const categories = ['Frontend', 'Backend', 'Infraestrutura & Práticas'] as cons
 
 function SkillsSection() {
   return (
-    <section id="competencias" className="bg-white px-6 py-24 dark:bg-[#0B0B0C]">
+    <section id="competencias" className="border-t border-neutral-200 bg-white px-6 py-24 dark:border-neutral-800/60 dark:bg-[#0B0B0C]">
       <div className="mx-auto max-w-5xl">
         <SectionHeading eyebrow="02 · Stack" title="Competências Técnicas" className="mb-12" />
 

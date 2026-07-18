@@ -6,7 +6,7 @@ import SectionHeading from '../SectionHeading/SectionHeading'
 
 function TalkSection() {
   return (
-    <section className="bg-neutral-50 px-6 py-24 dark:bg-neutral-950">
+    <section className="border-t border-neutral-200 bg-neutral-100 px-6 py-24 dark:border-neutral-800/60 dark:bg-[#141416]">
       <div className="mx-auto max-w-5xl">
         <SectionHeading eyebrow="07 · Palestra" title={talk.title} className="mb-0" />
 

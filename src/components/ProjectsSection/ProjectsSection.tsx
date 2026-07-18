@@ -5,7 +5,7 @@ import SectionHeading from '../SectionHeading/SectionHeading'
 
 function ProjectsSection() {
   return (
-    <section id="projetos" className="bg-white px-6 py-24 dark:bg-[#0B0B0C]">
+    <section id="projetos" className="border-t border-neutral-200 bg-white px-6 py-24 dark:border-neutral-800/60 dark:bg-[#0B0B0C]">
       <div className="mx-auto max-w-5xl">
         <SectionHeading eyebrow="04 · Portfólio" title="Projetos Relevantes" className="mb-16" />
 

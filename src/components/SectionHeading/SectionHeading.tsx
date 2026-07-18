@@ -18,7 +18,7 @@ function SectionHeading({ eyebrow, title, light, center, className = 'mb-12' }: 
         viewport={{ once: true, amount: 0.6 }}
         transition={{ duration: 0.5, ease: 'easeOut' }}
         className={`mb-4 flex items-center gap-3 font-sans text-xs font-semibold uppercase tracking-[0.25em] ${
-          light ? 'text-neutral-400' : 'text-neutral-500 dark:text-amber-300'
+          light ? 'text-neutral-400' : 'text-amber-700 dark:text-amber-300'
         }`}
       >
         <span className="h-px w-8 bg-current" />

@@ -4,7 +4,7 @@ import SectionHeading from '../SectionHeading/SectionHeading'
 
 function ExperienceSection() {
   return (
-    <section id="experiencia" className="bg-neutral-50 px-6 py-24 dark:bg-neutral-950">
+    <section id="experiencia" className="border-t border-neutral-200 bg-neutral-100 px-6 py-24 dark:border-neutral-800/60 dark:bg-[#141416]">
       <div className="mx-auto max-w-5xl">
         <SectionHeading eyebrow="03 · Trajetória" title="Experiência Profissional" className="mb-16" />
 
@@ -15,7 +15,7 @@ function ExperienceSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6 }}
-            className="mb-8 rounded-2xl border-l-4 border-neutral-900 bg-white p-8 shadow-sm transition-shadow duration-300 last:mb-0 hover:shadow-lg hover:shadow-neutral-200/70 dark:border-amber-300 dark:bg-neutral-900 dark:hover:shadow-black/40"
+            className="mb-8 rounded-2xl border-l-4 border-amber-500 bg-white p-8 shadow-sm transition-shadow duration-300 last:mb-0 hover:shadow-lg hover:shadow-neutral-200/70 dark:border-amber-300 dark:bg-neutral-900 dark:hover:shadow-black/40"
           >
             <h3 className="font-heading text-2xl font-bold text-neutral-900 dark:text-neutral-50">
               {item.company}
@@ -33,7 +33,7 @@ function ExperienceSection() {
                   key={highlight}
                   className="flex items-start gap-3 font-sans text-sm text-neutral-700 dark:text-neutral-300"
                 >
-                  <span className="mt-1 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-neutral-900 dark:bg-amber-300" />
+                  <span className="mt-1 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-amber-600 dark:bg-amber-300" />
                   <span>{highlight}</span>
                 </li>
               ))}
