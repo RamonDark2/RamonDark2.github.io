@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion'
 import { Github, Linkedin, Mail, MessageCircle } from 'lucide-react'
 import { CURSOR_FILL_LIGHT_CLASSNAME } from '../../styles/cursorFill'
 
@@ -14,17 +15,41 @@ function ContactSection() {
   return (
     <section className="bg-neutral-900 px-6 py-24 text-white dark:bg-black">
       <div className="mx-auto flex max-w-5xl flex-col items-center text-center">
-        <img
+        <motion.img
+          initial={{ opacity: 0, scale: 0.7 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ type: 'spring', damping: 14, stiffness: 180 }}
           src={wavingPhotoSrc}
           alt="Ramon Rodrigues acenando"
           className="mb-6 h-24 w-24 rounded-full object-cover object-top shadow-xl sm:h-28 sm:w-28"
         />
-        <h2 className="font-heading text-4xl font-bold sm:text-5xl">Vamos trabalhar juntos?</h2>
-        <p className="mt-4 font-sans text-neutral-300">
+        <motion.h2
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="font-heading text-4xl font-bold sm:text-5xl"
+        >
+          Vamos trabalhar juntos?
+        </motion.h2>
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="mt-4 font-sans text-neutral-300"
+        >
           Estou disponível para novos projetos e oportunidades
-        </p>
+        </motion.p>
 
-        <div className="mt-10 flex flex-wrap justify-center gap-4">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="mt-10 flex flex-wrap justify-center gap-4"
+        >
           <a
             href={`mailto:${EMAIL}`}
             className="flex items-center gap-3 rounded-xl bg-white px-6 py-3 font-sans font-semibold text-neutral-900 transition-transform hover:-translate-y-0.5"
@@ -59,7 +84,7 @@ function ContactSection() {
             <MessageCircle className="h-5 w-5" />
             WhatsApp
           </a>
-        </div>
+        </motion.div>
       </div>
     </section>
   )

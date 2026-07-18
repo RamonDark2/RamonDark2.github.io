@@ -23,7 +23,7 @@ function EcommerceSkillsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.4 }}
               transition={{ duration: 0.4, delay: index * 0.04 }}
-              className="rounded-full border border-neutral-200 px-5 py-2 font-sans text-sm font-medium text-neutral-700 transition-transform hover:-translate-y-0.5 dark:border-neutral-800 dark:text-neutral-300"
+              className="rounded-full border border-neutral-200 px-5 py-2 font-sans text-sm font-medium text-neutral-700 transition-[transform,border-color,background-color] duration-300 hover:-translate-y-0.5 hover:border-neutral-900 hover:bg-neutral-50 dark:border-neutral-800 dark:text-neutral-300 dark:hover:border-amber-300/60 dark:hover:bg-neutral-900"
             >
               {skill}
             </motion.span>

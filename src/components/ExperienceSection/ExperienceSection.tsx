@@ -16,7 +16,7 @@ function ExperienceSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6 }}
-            className="mb-8 rounded-2xl border-l-4 border-neutral-900 bg-white p-8 shadow-sm last:mb-0 dark:border-amber-300 dark:bg-neutral-900"
+            className="mb-8 rounded-2xl border-l-4 border-neutral-900 bg-white p-8 shadow-sm transition-shadow duration-300 last:mb-0 hover:shadow-lg hover:shadow-neutral-200/70 dark:border-amber-300 dark:bg-neutral-900 dark:hover:shadow-black/40"
           >
             <h3 className="font-heading text-2xl font-bold text-neutral-900 dark:text-neutral-50">
               {item.company}

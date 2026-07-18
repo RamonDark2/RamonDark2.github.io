@@ -14,7 +14,7 @@ function EcommerceExperienceSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.6 }}
-          className="grid gap-10 rounded-2xl border-l-4 border-neutral-900 bg-white p-8 shadow-sm dark:border-amber-300 dark:bg-neutral-900 md:grid-cols-2 md:items-center"
+          className="grid gap-10 rounded-2xl border-l-4 border-neutral-900 bg-white p-8 shadow-sm transition-shadow duration-300 hover:shadow-lg hover:shadow-neutral-200/70 dark:border-amber-300 dark:bg-neutral-900 dark:hover:shadow-black/40 md:grid-cols-2 md:items-center"
         >
           <div>
             <h3 className="font-heading text-2xl font-bold text-neutral-900 dark:text-neutral-50">

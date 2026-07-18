@@ -28,16 +28,12 @@ export function useGetUsers(username: string) {
 
 useEffect(() => {
     async function fetchUser() {
-      console.log('🚀 Iniciando fetch para:', username);
       try {
         const response = await fetch(`https://api.github.com/users/${username}`);
-        console.log('📡 Status da resposta:', response.status);
         if (!response.ok) throw new Error('Usuário não encontrado');
         const data: GitHubUser = await response.json();
-        console.log('✅ Dados recebidos:', data);
         setUser(data);
       } catch (err) {
-        console.error('❌ Erro:', err);
         setError((err as Error).message);
       } finally {
         setLoading(false);

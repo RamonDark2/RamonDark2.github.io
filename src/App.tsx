@@ -16,8 +16,9 @@ const routes: RouteConfig[] = [
     middlewares: [
       Middlewares.scrollToTop,
       Middlewares.setMeta({
-        title: 'Meu Portfolio',
-        description: 'Portfólio pessoal de Ramon Rodrigues - Desenvolvedor Full Stack',
+        title: 'Ramon Rodrigues — Desenvolvedor Full Stack',
+        description:
+          'Portfólio de Ramon Rodrigues — Desenvolvedor Full Stack. Vue.js, React, Next.js, TypeScript, Node.js, NestJS, Python e PostgreSQL.',
       }),
     ],
   },

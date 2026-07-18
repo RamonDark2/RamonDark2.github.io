@@ -20,26 +20,33 @@ function ProjectsSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.5 }}
-                className="flex flex-col rounded-2xl border border-neutral-200 p-8 transition-transform hover:-translate-y-1 dark:border-neutral-800"
+                className="group flex flex-col rounded-2xl border border-neutral-200 p-8 transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-1 hover:border-neutral-400 hover:shadow-xl hover:shadow-neutral-200/60 dark:border-neutral-800 dark:hover:border-amber-300/50 dark:hover:shadow-none"
               >
                 {project.image ? (
                   project.url ? (
-                    <a href={project.url} target="_blank" rel="noopener noreferrer">
+                    <a
+                      href={project.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mb-6 block overflow-hidden rounded-xl"
+                    >
                       <img
                         src={project.image}
                         alt={project.name}
-                        className="mb-6 h-40 w-full rounded-xl object-cover object-top transition-opacity hover:opacity-90"
+                        className="h-40 w-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-105"
                       />
                     </a>
                   ) : (
-                    <img
-                      src={project.image}
-                      alt={project.name}
-                      className="mb-6 h-40 w-full rounded-xl object-cover object-top"
-                    />
+                    <div className="mb-6 overflow-hidden rounded-xl">
+                      <img
+                        src={project.image}
+                        alt={project.name}
+                        className="h-40 w-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-105"
+                      />
+                    </div>
                   )
                 ) : (
-                  <Icon className="mb-6 h-10 w-10 text-neutral-900 dark:text-amber-300" />
+                  <Icon className="mb-6 h-10 w-10 text-neutral-900 transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-110 dark:text-amber-300" />
                 )}
                 <h3 className="font-heading text-xl font-bold text-neutral-900 dark:text-neutral-50">
                   {project.name}

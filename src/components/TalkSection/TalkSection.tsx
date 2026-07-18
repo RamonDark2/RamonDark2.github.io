@@ -49,16 +49,20 @@ function TalkSection() {
             />
           </motion.a>
           {talk.photos.map((photo, index) => (
-            <motion.img
+            <motion.div
               key={photo}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              src={photo}
-              alt={`Foto da apresentação ${index + 1}`}
-              className="h-48 w-full rounded-xl object-cover shadow-md"
-            />
+              className="overflow-hidden rounded-xl shadow-md"
+            >
+              <img
+                src={photo}
+                alt={`Foto da apresentação ${index + 1}`}
+                className="h-48 w-full object-cover transition-transform duration-500 ease-out hover:scale-105"
+              />
+            </motion.div>
           ))}
         </div>
       </div>

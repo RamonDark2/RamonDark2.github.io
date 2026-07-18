@@ -34,9 +34,9 @@ function SkillsSection() {
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true, amount: 0.4 }}
                       transition={{ duration: 0.4, delay: index * 0.05 }}
-                      className="flex flex-col items-center gap-3 rounded-xl border border-neutral-200 p-6 text-center transition-transform hover:-translate-y-1 dark:border-neutral-800"
+                      className="group flex flex-col items-center gap-3 rounded-xl border border-neutral-200 p-6 text-center transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-1 hover:border-neutral-400 hover:shadow-lg hover:shadow-neutral-200/60 dark:border-neutral-800 dark:hover:border-amber-300/50 dark:hover:shadow-none"
                     >
-                      <Icon className="h-7 w-7 text-neutral-900 dark:text-neutral-50" />
+                      <Icon className="h-7 w-7 text-neutral-900 transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-110 dark:text-neutral-50" />
                       <span className="font-sans text-sm font-medium text-neutral-700 dark:text-neutral-300">
                         {skill.name}
                       </span>

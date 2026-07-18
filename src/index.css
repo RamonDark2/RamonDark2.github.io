@@ -13,6 +13,22 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+::selection {
+  background-color: #171717;
+  color: #fff;
+}
+
+.dark ::selection {
+  background-color: #fff;
+  color: #171717;
+}
+
 @media (hover: hover) and (pointer: fine) {
   body {
     cursor: none;
