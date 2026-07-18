@@ -130,13 +130,9 @@ export interface AboutContent {
 export const about: AboutContent = {
   heading: 'Desenvolvimento de aplicações completas, seguras e escaláveis',
   paragraphs: [
-    'Sou Desenvolvedor Full Stack com experiência na construção e manutenção de aplicações web, atuando desde o desenvolvimento de interfaces responsivas até a criação e integração de APIs, bancos de dados, autenticação, infraestrutura e deploy.',
-    'Atualmente trabalho na Prodater — Soluções em Tecnologia da Informação, participando do desenvolvimento de sistemas para a Prefeitura de Teresina e de soluções internas de gestão administrativa.',
-    'Minha atuação envolve desenvolvimento com Vue.js, React, Next.js, TypeScript, JavaScript e Tailwind CSS, criação de dashboards administrativos, integração com APIs REST e implementação de funcionalidades para gerenciamento de usuários, permissões e vigência de vínculos.',
-    'Também possuo experiência como freelancer no desenvolvimento frontend para e-commerces, realizando criação e personalização de interfaces, implementação de layouts responsivos, ajustes na experiência do usuário e integração de componentes em lojas virtuais.',
-    'No backend, tenho experiência com Node.js, NestJS, Python, FastAPI, Prisma e PostgreSQL, incluindo implementação de regras de negócio, autenticação com JWT, renovação de sessão com refresh token, validação de dados e controle de acesso baseado em perfis.',
-    'Participo de processos de Code Review, contribuindo para a padronização, segurança, manutenção e evolução das aplicações.',
-    'Tenho experiência com Docker, CI/CD, Git e deploy de aplicações, além da utilização de estratégias de componentização e organização de interfaces baseadas em princípios como Atomic Design.',
+    'Desenvolvedor Full Stack com experiência de ponta a ponta — do frontend ao backend, banco de dados, autenticação e deploy.',
+    'Atualmente na Prodater — Soluções em Tecnologia da Informação, desenvolvendo sistemas para a Prefeitura de Teresina e soluções internas de gestão administrativa, com dashboards, integração de APIs e controle de acesso.',
+    'Participo ativamente de Code Review e sigo boas práticas de arquitetura, componentização e organização de interfaces.',
   ],
 }
 
