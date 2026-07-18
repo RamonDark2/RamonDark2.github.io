@@ -13,14 +13,16 @@
 
 const ORIGIN = "before:origin-[var(--cursor-origin-x,50%)_var(--cursor-origin-y,50%)]"
 
-// Uso geral: acompanha o tema do site (claro → fundo branco/texto escuro, escuro → o oposto).
-// Borda + sombra dão definição ao preenchimento mesmo sobre fundos claros/escuros parecidos.
+// Uso geral: acompanha o tema do site, invertido — claro → fundo preto/texto branco,
+// escuro → fundo branco/texto preto. `hover:text-*` muda a cor do texto (e dos ícones
+// lucide, que herdam via currentColor) junto com o preenchimento.
 export const CURSOR_FILL_CLASSNAME =
-  `relative isolate before:absolute before:-inset-x-3 before:-inset-y-2 before:-z-10 before:scale-0 ${ORIGIN} before:rounded-full before:border before:border-neutral-200 before:bg-white before:shadow-md before:transition-transform before:duration-300 before:ease-out before:content-[''] dark:before:border-neutral-800 dark:before:bg-neutral-900 hover:before:scale-100`
+  `relative isolate transition-colors before:absolute before:-inset-x-3 before:-inset-y-2 before:-z-10 before:scale-0 ${ORIGIN} before:rounded-full before:bg-neutral-900 before:shadow-md before:transition-transform before:duration-300 before:ease-out before:content-[''] dark:before:bg-white hover:text-white dark:hover:text-neutral-900 hover:before:scale-100`
 
 // Uso dentro de seções que são sempre escuras independente do tema (ex: ContactSection) —
-// o preenchimento fica sempre claro, já que o fundo ao redor nunca muda com o tema. Pensado
-// para botões que já têm caixa/borda própria (rounded-xl): preenche a caixa em vez de crescer
-// além dela. Combine com `hover:text-neutral-900` no próprio link para o texto ficar legível.
+// o preenchimento fica sempre claro (equivalente a "inverter" um fundo que já é sempre
+// escuro), já que o fundo ao redor nunca muda com o tema. Pensado para botões que já têm
+// caixa/borda própria (rounded-xl): preenche a caixa em vez de crescer além dela. Combine
+// com `hover:text-neutral-900` no próprio link para o texto ficar legível.
 export const CURSOR_FILL_LIGHT_CLASSNAME =
   `relative isolate before:absolute before:inset-0 before:-z-10 before:scale-0 ${ORIGIN} before:rounded-xl before:bg-white before:transition-transform before:duration-300 before:ease-out before:content-[''] hover:before:scale-100`
