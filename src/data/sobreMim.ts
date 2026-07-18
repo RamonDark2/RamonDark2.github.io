@@ -101,6 +101,7 @@ export const projects: Project[] = [
     icon: GraduationCap,
     tag: 'Prefeitura de Teresina',
     url: 'https://ced.teresina.pi.gov.br/sobre',
+    image: `${baseUrl}img/Macbook-Air-ced.teresina.pi.gov.br.png`,
   },
   {
     name: 'Orçamento Popular',
