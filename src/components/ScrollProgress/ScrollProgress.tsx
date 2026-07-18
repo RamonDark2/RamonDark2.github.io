@@ -1,13 +1,14 @@
-import { motion, useScroll, useSpring } from 'framer-motion'
+import { motion, useScroll } from 'framer-motion'
 
 function ScrollProgress() {
+  // Sem useSpring de propósito: o spring continua agendando frames depois que o
+  // scroll para, e o acoplamento 1:1 direto já é suave o bastante para uma barra.
   const { scrollYProgress } = useScroll()
-  const scaleX = useSpring(scrollYProgress, { damping: 30, stiffness: 200, mass: 0.4 })
 
   return (
     <motion.div
-      style={{ scaleX }}
-      className="fixed left-0 top-0 z-[9998] h-0.5 w-full origin-left bg-neutral-900 dark:bg-amber-300"
+      style={{ scaleX: scrollYProgress }}
+      className="fixed left-0 top-0 z-[9998] h-0.5 w-full origin-left bg-neutral-900 will-change-transform dark:bg-amber-300"
     />
   )
 }

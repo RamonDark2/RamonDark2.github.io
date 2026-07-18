@@ -23,6 +23,8 @@ function ContactSection() {
           transition={{ type: 'spring', damping: 14, stiffness: 180 }}
           src={wavingPhotoSrc}
           alt="Ramon Rodrigues acenando"
+          loading="lazy"
+          decoding="async"
           className="mb-6 h-24 w-24 rounded-full object-cover object-top shadow-xl sm:h-28 sm:w-28"
         />
         <SectionHeading eyebrow="08 · Contato" title="Vamos trabalhar juntos?" light center className="mb-0" />

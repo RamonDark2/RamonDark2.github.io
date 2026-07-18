@@ -38,6 +38,8 @@ function TalkSection() {
             <img
               src={talk.mockupImage}
               alt={talk.title}
+              loading="lazy"
+              decoding="async"
               className="w-full drop-shadow-lg transition-opacity hover:opacity-90"
             />
           </motion.a>
@@ -53,6 +55,8 @@ function TalkSection() {
               <img
                 src={photo}
                 alt={`Foto da apresentação ${index + 1}`}
+                loading="lazy"
+                decoding="async"
                 className="h-48 w-full object-cover transition-transform duration-500 ease-out hover:scale-105"
               />
             </motion.div>

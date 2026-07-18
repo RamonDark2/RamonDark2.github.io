@@ -9,7 +9,7 @@ function ProjectsSection() {
       <div className="mx-auto max-w-5xl">
         <SectionHeading eyebrow="04 · Portfólio" title="Projetos Relevantes" className="mb-16" />
 
-        <div className="grid gap-8 md:grid-cols-3">
+        <div className="grid gap-8 md:grid-cols-2">
           {projects.map((project) => {
             const Icon = project.icon
             return (
@@ -32,7 +32,9 @@ function ProjectsSection() {
                       <img
                         src={project.image}
                         alt={project.name}
-                        className="h-40 w-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-105"
+                        loading="lazy"
+                        decoding="async"
+                        className="h-52 w-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-105"
                       />
                     </a>
                   ) : (
@@ -40,7 +42,9 @@ function ProjectsSection() {
                       <img
                         src={project.image}
                         alt={project.name}
-                        className="h-40 w-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-105"
+                        loading="lazy"
+                        decoding="async"
+                        className="h-52 w-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-105"
                       />
                     </div>
                   )

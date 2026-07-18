@@ -46,6 +46,8 @@ function EcommerceExperienceSection() {
             <img
               src={ecommerceExperience.image}
               alt={ecommerceExperience.imageCaption}
+              loading="lazy"
+              decoding="async"
               className="w-full drop-shadow-lg"
             />
             <p className="mt-3 text-center font-sans text-xs uppercase tracking-widest text-neutral-500 dark:text-neutral-400">

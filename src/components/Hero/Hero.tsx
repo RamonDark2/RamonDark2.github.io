@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion'
+import { useRef } from 'react'
+import { motion, useInView } from 'framer-motion'
 import { ChevronDown, Hand } from 'lucide-react'
 import { useGetUsers } from '../../hooks/useGet/useGetUsers'
 import Header from '../Header/Header'
@@ -37,26 +38,30 @@ function MaskedName({ text, delay }: { text: string; delay: number }) {
 
 function Hero() {
   const { user, loading } = useGetUsers(GITHUB_USERNAME)
+  const sectionRef = useRef<HTMLElement>(null)
+  // Pausa os blobs desfocados quando o Hero sai da tela: blur-3xl animando
+  // continuamente fora da viewport era uma das fontes de lag no scroll.
+  const inView = useInView(sectionRef)
 
   return (
-    <section className="relative min-h-screen overflow-hidden bg-white dark:bg-[#0B0B0C]">
+    <section ref={sectionRef} className="relative min-h-screen overflow-hidden bg-white dark:bg-[#0B0B0C]">
       <div className="pointer-events-none absolute inset-0">
         <motion.div
-          className="absolute -left-20 top-10 h-96 w-96 rounded-full bg-amber-200/40 blur-3xl dark:bg-indigo-900/40"
-          animate={{ x: [0, 40, 0], y: [0, 30, 0] }}
-          transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute -left-20 top-10 h-96 w-96 rounded-full bg-amber-200/40 blur-3xl will-change-transform dark:bg-indigo-900/40"
+          animate={inView ? { x: [0, 40, 0], y: [0, 30, 0] } : { x: 0, y: 0 }}
+          transition={{ duration: 18, repeat: inView ? Infinity : 0, ease: 'easeInOut' }}
         />
         <motion.div
-          className="absolute right-0 top-1/3 h-[28rem] w-[28rem] rounded-full bg-rose-200/30 blur-3xl dark:bg-slate-800/40"
-          animate={{ x: [0, -30, 0], y: [0, -40, 0] }}
-          transition={{ duration: 22, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute right-0 top-1/3 h-[28rem] w-[28rem] rounded-full bg-rose-200/30 blur-3xl will-change-transform dark:bg-slate-800/40"
+          animate={inView ? { x: [0, -30, 0], y: [0, -40, 0] } : { x: 0, y: 0 }}
+          transition={{ duration: 22, repeat: inView ? Infinity : 0, ease: 'easeInOut' }}
         />
         <motion.div
-          className="absolute bottom-0 left-1/3 h-80 w-80 rounded-full bg-sky-200/30 blur-3xl dark:bg-amber-900/20"
-          animate={{ x: [0, 20, 0], y: [0, -20, 0] }}
-          transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute bottom-0 left-1/3 h-80 w-80 rounded-full bg-sky-200/30 blur-3xl will-change-transform dark:bg-amber-900/20"
+          animate={inView ? { x: [0, 20, 0], y: [0, -20, 0] } : { x: 0, y: 0 }}
+          transition={{ duration: 20, repeat: inView ? Infinity : 0, ease: 'easeInOut' }}
         />
-        <svg className="absolute inset-0 h-full w-full opacity-[0.05] mix-blend-overlay">
+        <svg className="absolute inset-0 h-full w-full opacity-[0.04]">
           <filter id="hero-noise">
             <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves={2} stitchTiles="stitch" />
           </filter>
