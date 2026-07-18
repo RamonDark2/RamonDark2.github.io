@@ -40,7 +40,14 @@ function Cursor() {
       }
 
       // Links/botões de texto têm seu próprio preenchimento em pílula via CSS (ver
-      // src/styles/cursorFill.ts) — a bolinha some para não sobrepor o efeito local.
+      // src/styles/cursorFill.ts) — a bolinha some para não sobrepor o efeito local, mas o
+      // preenchimento nasce exatamente de onde a bolinha estava (mesmo ponto em que o mouse
+      // entrou no link), para dar a sensação de uma transição contínua entre os dois.
+      const rect = target.getBoundingClientRect()
+      const originX = ((event.clientX - rect.left) / rect.width) * 100
+      const originY = ((event.clientY - rect.top) / rect.height) * 100
+      target.style.setProperty('--cursor-origin-x', `${originX}%`)
+      target.style.setProperty('--cursor-origin-y', `${originY}%`)
       scale.set(0)
     }
 
