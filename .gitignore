@@ -12,9 +12,6 @@ dist
 dist-ssr
 *.local
 
-# Subagent-driven-development scratch (briefs, reports, review packages, ledger)
-.superpowers/
-
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -25,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+.claude/
+.cursor/
+.windsurf/
+.superpowers/
+docs/superpowers/
+CLAUDE.md
+.aider*
