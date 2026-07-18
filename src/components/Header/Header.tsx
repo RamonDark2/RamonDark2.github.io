@@ -1,5 +1,6 @@
 import { Github, Linkedin, MessageCircle } from 'lucide-react'
 import ThemeToggle from '../ThemeToggle/ThemeToggle'
+import { CURSOR_FILL_CLASSNAME } from '../../styles/cursorFill'
 
 const EMAIL = 'jalbertramon1@gmail.com'
 const WHATSAPP_URL = 'https://wa.me/86994258329'
@@ -21,7 +22,7 @@ function Header() {
           href={WHATSAPP_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-2 font-semibold hover:opacity-70"
+          className={`flex items-center gap-2 font-semibold ${CURSOR_FILL_CLASSNAME}`}
         >
           <MessageCircle className="h-4 w-4" />
           WhatsApp
@@ -30,7 +31,7 @@ function Header() {
           href={GITHUB_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-2 font-semibold hover:opacity-70"
+          className={`flex items-center gap-2 font-semibold ${CURSOR_FILL_CLASSNAME}`}
         >
           <Github className="h-4 w-4" />
           GitHub
@@ -39,7 +40,7 @@ function Header() {
           href={LINKEDIN_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-2 font-semibold hover:opacity-70"
+          className={`flex items-center gap-2 font-semibold ${CURSOR_FILL_CLASSNAME}`}
         >
           <Linkedin className="h-4 w-4" />
           LinkedIn

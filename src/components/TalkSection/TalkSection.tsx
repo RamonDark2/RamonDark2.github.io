@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { ExternalLink } from 'lucide-react'
 import { talk } from '../../data/sobreMim'
+import { CURSOR_FILL_CLASSNAME } from '../../styles/cursorFill'
 
 function TalkSection() {
   return (
@@ -24,7 +25,7 @@ function TalkSection() {
           href={talk.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-6 inline-flex items-center gap-2 font-sans text-sm font-semibold text-neutral-900 hover:underline dark:text-amber-300"
+          className={`mt-6 inline-flex items-center gap-2 font-sans text-sm font-semibold text-neutral-900 dark:text-amber-300 ${CURSOR_FILL_CLASSNAME}`}
         >
           {talk.linkLabel}
           <ExternalLink className="h-4 w-4" />

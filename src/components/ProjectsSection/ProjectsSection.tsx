@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { projects } from '../../data/sobreMim'
+import { CURSOR_FILL_CLASSNAME } from '../../styles/cursorFill'
 
 function ProjectsSection() {
   return (
@@ -56,7 +57,7 @@ function ProjectsSection() {
                     href={project.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-6 self-end font-sans text-sm font-semibold text-neutral-900 hover:underline dark:text-amber-300"
+                    className={`mt-6 self-end font-sans text-sm font-semibold text-neutral-900 dark:text-amber-300 ${CURSOR_FILL_CLASSNAME}`}
                   >
                     Ver site
                   </a>

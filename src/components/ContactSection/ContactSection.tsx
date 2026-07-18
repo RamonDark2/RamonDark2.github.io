@@ -1,4 +1,5 @@
 import { Github, Linkedin, Mail, MessageCircle } from 'lucide-react'
+import { CURSOR_FILL_LIGHT_CLASSNAME } from '../../styles/cursorFill'
 
 const EMAIL = 'jalbertramon1@gmail.com'
 const GITHUB_URL = 'https://github.com/RamonDark2'
@@ -27,7 +28,7 @@ function ContactSection() {
             href={GITHUB_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-3 rounded-xl border border-white px-6 py-3 font-sans font-semibold transition-transform hover:-translate-y-0.5"
+            className={`flex items-center gap-3 rounded-xl border border-white px-6 py-3 font-sans font-semibold transition-[transform,color] hover:-translate-y-0.5 hover:text-neutral-900 ${CURSOR_FILL_LIGHT_CLASSNAME}`}
           >
             <Github className="h-5 w-5" />
             GitHub
@@ -36,7 +37,7 @@ function ContactSection() {
             href={LINKEDIN_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-3 rounded-xl border border-white px-6 py-3 font-sans font-semibold transition-transform hover:-translate-y-0.5"
+            className={`flex items-center gap-3 rounded-xl border border-white px-6 py-3 font-sans font-semibold transition-[transform,color] hover:-translate-y-0.5 hover:text-neutral-900 ${CURSOR_FILL_LIGHT_CLASSNAME}`}
           >
             <Linkedin className="h-5 w-5" />
             LinkedIn
@@ -45,7 +46,7 @@ function ContactSection() {
             href={`${WHATSAPP_URL}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-3 rounded-xl border border-white px-6 py-3 font-sans font-semibold transition-transform hover:-translate-y-0.5"
+            className={`flex items-center gap-3 rounded-xl border border-white px-6 py-3 font-sans font-semibold transition-[transform,color] hover:-translate-y-0.5 hover:text-neutral-900 ${CURSOR_FILL_LIGHT_CLASSNAME}`}
           >
             <MessageCircle className="h-5 w-5" />
             WhatsApp
