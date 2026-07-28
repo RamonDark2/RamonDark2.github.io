@@ -75,7 +75,7 @@ function IntroReveal() {
               />
               <motion.img
                 src={wavingPhotoSrc}
-                alt="Ramon Rodrigues acenando"
+                alt="Jalbert Ramon acenando"
                 initial={{ opacity: 0, scale: 0.55 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ type: 'spring', damping: 14, stiffness: 180, delay: 0.1 }}
@@ -105,7 +105,7 @@ function IntroReveal() {
                 transition={{ duration: 0.6, ease: REVEAL_EASE, delay: 0.7 }}
                 className="inline-block font-sans text-sm uppercase tracking-[0.35em] text-neutral-500 dark:text-neutral-400"
               >
-                Ramon Rodrigues
+                Jalbert Ramon
               </motion.span>
             </span>
 

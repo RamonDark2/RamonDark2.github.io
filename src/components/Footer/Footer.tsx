@@ -7,7 +7,7 @@ const LINKEDIN_URL = 'https://www.linkedin.com/in/ramon-rodrigues-48459721b/'
 function Footer() {
   return (
     <footer className="flex w-full flex-col items-center justify-between gap-4 border-t border-neutral-200 bg-white px-6 py-6 text-sm text-neutral-600 dark:border-neutral-800 dark:bg-[#0B0B0C] dark:text-neutral-400 sm:flex-row">
-      <span>© {new Date().getFullYear()} Ramon Rodrigues</span>
+      <span>© {new Date().getFullYear()} Jalbert Ramon</span>
       <div className="flex items-center gap-4">
         <a target="_blank" rel="noopener noreferrer" href={WHATSAPP_URL} aria-label="WhatsApp">
           <MessageCircle className="h-5 w-5 hover:opacity-70" />

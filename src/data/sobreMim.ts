@@ -1,24 +1,18 @@
-import type { LucideIcon } from 'lucide-react'
+import type { ComponentType, CSSProperties } from 'react'
+import { Briefcase, Cloud, GraduationCap, Heart, Landmark, Network } from 'lucide-react'
 import {
-  Atom,
-  Braces,
-  Briefcase,
-  Cloud,
-  Component,
-  Container,
-  Database,
-  GitBranch,
-  GraduationCap,
-  Heart,
-  Hexagon,
-  Landmark,
-  Layers,
-  Network,
-  Server,
-  Smartphone,
-  Triangle,
-  Zap,
-} from 'lucide-react'
+  SiDocker,
+  SiGit,
+  SiNestjs,
+  SiNextdotjs,
+  SiNodedotjs,
+  SiPostgresql,
+  SiPrisma,
+  SiPython,
+  SiReact,
+  SiTypescript,
+  SiVuedotjs,
+} from 'react-icons/si'
 
 const baseUrl = import.meta.env.BASE_URL
 
@@ -27,24 +21,32 @@ export const GITHUB_USERNAME = 'RamonDark2'
 export interface Skill {
   category: 'Frontend' | 'Backend' | 'Infraestrutura & Práticas'
   name: string
-  icon: LucideIcon
+  // Logos reais de marca via react-icons/si (Simple Icons) quando existem;
+  // lucide-react só para as duas entradas sem logo próprio (Infraestrutura,
+  // REST APIs) — ambos os tipos aceitam `className`, então convivem aqui.
+  icon: ComponentType<{ className?: string; style?: CSSProperties }>
+  // Cor oficial de cada marca (aplicada via inline style, currentColor não
+  // serve aqui pois cada logo tem sua própria cor, não a do tema). As duas
+  // entradas sem marca própria (Infraestrutura, REST APIs) usam um tom
+  // neutro só pra não ficarem em cinza puro no meio das cores reais.
+  color: string
 }
 
 export const skills: Skill[] = [
-  { category: 'Frontend', name: 'React', icon: Atom },
-  { category: 'Frontend', name: 'Vue.js', icon: Component },
-  { category: 'Frontend', name: 'Next.js', icon: Triangle },
-  { category: 'Frontend', name: 'React Native + TypeScript', icon: Smartphone },
-  { category: 'Frontend', name: 'TypeScript', icon: Braces },
-  { category: 'Backend', name: 'Node.js', icon: Hexagon },
-  { category: 'Backend', name: 'NestJS', icon: Server },
-  { category: 'Backend', name: 'Python / FastAPI', icon: Zap },
-  { category: 'Backend', name: 'ORM / Prisma', icon: Layers },
-  { category: 'Backend', name: 'PostgreSQL', icon: Database },
-  { category: 'Infraestrutura & Práticas', name: 'Docker', icon: Container },
-  { category: 'Infraestrutura & Práticas', name: 'Infraestrutura', icon: Cloud },
-  { category: 'Infraestrutura & Práticas', name: 'REST APIs', icon: Network },
-  { category: 'Infraestrutura & Práticas', name: 'Git', icon: GitBranch },
+  { category: 'Frontend', name: 'React', icon: SiReact, color: '#61DAFB' },
+  { category: 'Frontend', name: 'Vue.js', icon: SiVuedotjs, color: '#4FC08D' },
+  { category: 'Frontend', name: 'Next.js', icon: SiNextdotjs, color: '#A9A9A9' },
+  { category: 'Frontend', name: 'React Native + TypeScript', icon: SiReact, color: '#61DAFB' },
+  { category: 'Frontend', name: 'TypeScript', icon: SiTypescript, color: '#3178C6' },
+  { category: 'Backend', name: 'Node.js', icon: SiNodedotjs, color: '#5FA04E' },
+  { category: 'Backend', name: 'NestJS', icon: SiNestjs, color: '#E0234E' },
+  { category: 'Backend', name: 'Python / FastAPI', icon: SiPython, color: '#3776AB' },
+  { category: 'Backend', name: 'ORM / Prisma', icon: SiPrisma, color: '#16A394' },
+  { category: 'Backend', name: 'PostgreSQL', icon: SiPostgresql, color: '#4169E1' },
+  { category: 'Infraestrutura & Práticas', name: 'Docker', icon: SiDocker, color: '#2496ED' },
+  { category: 'Infraestrutura & Práticas', name: 'Infraestrutura', icon: Cloud, color: '#0EA5E9' },
+  { category: 'Infraestrutura & Práticas', name: 'REST APIs', icon: Network, color: '#6366F1' },
+  { category: 'Infraestrutura & Práticas', name: 'Git', icon: SiGit, color: '#F05032' },
 ]
 
 export interface ExperienceItem {
@@ -65,12 +67,10 @@ export const experience: ExperienceItem[] = [
     summary:
       'Atuação no desenvolvimento de sistemas web para a Prefeitura de Teresina e projetos internos de gestão administrativa.',
     highlights: [
-      'Experiência prática em desenvolvimento de aplicações web utilizando React, TypeScript, JavaScript e Tailwind CSS',
-      'Desenvolvimento de aplicações web utilizando Vue.js, TypeScript, JavaScript e Tailwind CSS',
+      'Desenvolvimento de aplicações web com React e Vue.js, TypeScript e Tailwind CSS',
       'Criação de interfaces responsivas e acessíveis',
       'Implementação de dashboards administrativos para análise de dados',
-      'Controle de usuários, permissões e vigência de vínculos',
-      'Integração com APIs REST e sistemas internos',
+      'Controle de usuários, permissões e integração com APIs REST',
     ],
   },
 ]
@@ -78,7 +78,7 @@ export const experience: ExperienceItem[] = [
 export interface Project {
   name: string
   description: string
-  icon: LucideIcon
+  icon: ComponentType<{ className?: string; style?: CSSProperties }>
   tag: string | null
   url: string | null
   image?: string
@@ -152,34 +152,17 @@ export const ecommerceExperience: ComplementaryExperience = {
   summary:
     'Atuação em projetos de desenvolvimento, personalização e manutenção de interfaces para lojas virtuais.',
   highlights: [
-    'Desenvolvimento e personalização de páginas de e-commerce',
-    'Implementação de layouts responsivos para dispositivos móveis e desktops',
-    'Criação e adaptação de componentes visuais',
-    'Ajustes em páginas de produtos, carrinho e etapas de compra',
-    'Melhoria da usabilidade e da experiência do usuário',
-    'Correção de problemas de layout e responsividade',
-    'Implementação de interfaces com HTML, CSS, JavaScript e tecnologias modernas de frontend',
-    'Adaptação de layouts conforme a identidade visual das marcas',
-    'Integração de elementos visuais e componentes em plataformas de comércio eletrônico',
+    'Personalização de lojas virtuais',
+    'Interfaces responsivas para mobile e desktop',
+    'Páginas de produto, carrinho e checkout',
+    'Adaptação à identidade visual das marcas',
+    'Melhoria de usabilidade e experiência do usuário',
+    'Correção de problemas de layout',
     'Manutenção e evolução de lojas virtuais existentes',
   ],
   image: `${baseUrl}img/Macbook-Air-prolimgel.lojavirtualnuvem.com.br.png`,
   imageCaption: 'Prolimgel — loja virtual',
 }
-
-export const ecommerceSkills: string[] = [
-  'Desenvolvimento frontend para e-commerces',
-  'Personalização de lojas virtuais',
-  'Interfaces responsivas',
-  'Experiência do usuário aplicada a lojas online',
-  'Páginas de produtos',
-  'Carrinho de compras',
-  'Fluxos de checkout',
-  'Manutenção de interfaces',
-  'Adaptação de identidade visual',
-  'Correção de problemas de layout',
-  'Otimização da navegação em dispositivos móveis',
-]
 
 export interface Talk {
   title: string

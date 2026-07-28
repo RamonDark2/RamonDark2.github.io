@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { projects } from '../../data/sobreMim'
 import { CURSOR_FILL_CLASSNAME } from '../../styles/cursorFill'
+import LiveMockup from '../LiveMockup/LiveMockup'
 import SectionHeading from '../SectionHeading/SectionHeading'
 
 function ProjectsSection() {
@@ -10,7 +11,7 @@ function ProjectsSection() {
         <SectionHeading eyebrow="04 · Portfólio" title="Projetos Relevantes" className="mb-16" />
 
         <div className="grid gap-8 md:grid-cols-2">
-          {projects.map((project) => {
+          {projects.map((project, index) => {
             const Icon = project.icon
             return (
               <motion.div
@@ -18,29 +19,23 @@ function ProjectsSection() {
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.5 }}
+                transition={{ duration: 0.5, delay: (index % 2) * 0.12 }}
                 className="group flex flex-col rounded-2xl border border-neutral-200 p-8 transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-1 hover:border-neutral-400 hover:shadow-xl hover:shadow-neutral-200/60 dark:border-neutral-800 dark:hover:border-amber-300/50 dark:hover:shadow-none"
               >
                 {project.image ? (
-                  project.url ? (
-                    <a href={project.url} target="_blank" rel="noopener noreferrer" className="mb-6 block">
+                  <div className="mb-6">
+                    {project.url ? (
+                      <LiveMockup image={project.image} alt={project.name} url={project.url} />
+                    ) : (
                       <img
                         src={project.image}
                         alt={project.name}
                         loading="lazy"
                         decoding="async"
-                        className="w-full drop-shadow-lg transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+                        className="w-full drop-shadow-lg"
                       />
-                    </a>
-                  ) : (
-                    <img
-                      src={project.image}
-                      alt={project.name}
-                      loading="lazy"
-                      decoding="async"
-                      className="mb-6 w-full drop-shadow-lg transition-transform duration-500 ease-out group-hover:scale-[1.03]"
-                    />
-                  )
+                    )}
+                  </div>
                 ) : (
                   <Icon className="mb-6 h-10 w-10 text-neutral-900 transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-110 dark:text-amber-300" />
                 )}

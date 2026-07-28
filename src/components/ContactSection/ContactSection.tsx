@@ -22,12 +22,12 @@ function ContactSection() {
           viewport={{ once: true, amount: 0.5 }}
           transition={{ type: 'spring', damping: 14, stiffness: 180 }}
           src={wavingPhotoSrc}
-          alt="Ramon Rodrigues acenando"
+          alt="Jalbert Ramon acenando"
           loading="lazy"
           decoding="async"
           className="mb-6 h-24 w-24 rounded-full object-cover object-top shadow-xl sm:h-28 sm:w-28"
         />
-        <SectionHeading eyebrow="08 · Contato" title="Vamos trabalhar juntos?" light center className="mb-0" />
+        <SectionHeading eyebrow="06 · Contato" title="Vamos trabalhar juntos?" light center className="mb-0" />
         <motion.p
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}

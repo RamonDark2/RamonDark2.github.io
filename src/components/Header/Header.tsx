@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react'
+import { motion } from 'framer-motion'
 import { Github, Linkedin, MessageCircle } from 'lucide-react'
 import ThemeToggle from '../ThemeToggle/ThemeToggle'
 import { CURSOR_FILL_CLASSNAME } from '../../styles/cursorFill'
@@ -18,13 +20,66 @@ const NAV_ITEMS = [
   { label: 'Contato', target: 'contato' },
 ]
 
+// Mesmo delay de INTRO_OFFSET_S + 0.5 do Hero.tsx — mantém os dois em sincronia
+// se a duração da cortina do IntroReveal mudar.
+const STICKY_INTRO_DELAY_S = 2.2
+const SCROLL_THRESHOLD_PX = 80
+
 function scrollToSection(target: string) {
   document.getElementById(target)?.scrollIntoView({ behavior: 'smooth' })
 }
 
-function Header() {
+interface HeaderProps {
+  // 'sticky': fixo no topo da viewport, sem fundo enquanto a página está no
+  // topo (para ficar sobre a foto do Hero) e com fundo em glass + versão
+  // compacta assim que o usuário rola a página. Usado só na página principal
+  // — a página de Login usa o Header no fluxo normal, sem esse comportamento.
+  sticky?: boolean
+}
+
+function Header({ sticky = false }: HeaderProps) {
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    if (!sticky) return
+
+    function handleScroll() {
+      setScrolled(window.scrollY > SCROLL_THRESHOLD_PX)
+    }
+    handleScroll()
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [sticky])
+
+  // Só fica sem fundo (direto sobre a foto do Hero) no topo da página. O
+  // texto do Header fica sempre claro quando sticky — tanto no topo (sobre a
+  // foto) quanto rolado (o glass é preto de propósito, não branco, então
+  // precisa do mesmo texto claro, independente do tema do site).
+  const overPhoto = sticky && !scrolled
+
+  const headerClassName = [
+    'flex w-full flex-col items-center gap-4 font-sans text-sm md:flex-row md:justify-between',
+    sticky
+      ? 'fixed inset-x-0 top-0 z-50 text-white transition-[background-color,padding,box-shadow] duration-300'
+      : '',
+    overPhoto ? 'bg-transparent px-6 py-6' : '',
+    sticky && !overPhoto ? 'bg-black/50 px-6 py-3 shadow-sm shadow-black/20 backdrop-blur-md' : '',
+    !sticky ? 'px-6 py-6 text-neutral-900 dark:text-neutral-50' : '',
+  ]
+    .filter(Boolean)
+    .join(' ')
+
+  const navClassName = `font-sans text-sm font-medium ${
+    sticky ? 'text-neutral-300' : 'text-neutral-600 dark:text-neutral-400'
+  } ${CURSOR_FILL_CLASSNAME}`
+
   return (
-    <header className="flex w-full flex-col items-center gap-4 px-6 py-6 font-sans text-sm text-neutral-900 dark:text-neutral-50 md:flex-row md:justify-between">
+    <motion.header
+      initial={sticky ? { opacity: 0, y: -16 } : false}
+      animate={sticky ? { opacity: 1, y: 0 } : undefined}
+      transition={{ duration: 0.6, ease: 'easeOut', delay: STICKY_INTRO_DELAY_S }}
+      className={headerClassName}
+    >
       <a
         href={`mailto:${EMAIL}`}
         className="rounded-full border border-current px-5 py-2 font-semibold uppercase tracking-wide transition-colors hover:bg-neutral-900 hover:text-white dark:hover:bg-white dark:hover:text-neutral-900"
@@ -34,12 +89,7 @@ function Header() {
 
       <nav className="hidden items-center gap-5 lg:flex">
         {NAV_ITEMS.map((item) => (
-          <button
-            key={item.target}
-            type="button"
-            onClick={() => scrollToSection(item.target)}
-            className={`font-sans text-sm font-medium text-neutral-600 dark:text-neutral-400 ${CURSOR_FILL_CLASSNAME}`}
-          >
+          <button key={item.target} type="button" onClick={() => scrollToSection(item.target)} className={navClassName}>
             {item.label}
           </button>
         ))}
@@ -75,7 +125,7 @@ function Header() {
         </a>
         <ThemeToggle />
       </div>
-    </header>
+    </motion.header>
   )
 }
 
