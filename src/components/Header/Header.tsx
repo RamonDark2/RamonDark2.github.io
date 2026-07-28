@@ -158,9 +158,7 @@ function Header({ sticky = false }: HeaderProps) {
       </nav>
 
       <div className="flex items-center gap-4 md:gap-6">
-        <div className="hidden lg:block">
-          <ThemeToggle sticky={sticky} />
-        </div>
+        <ThemeToggle sticky={sticky} />
 
         {/* "Fale comigo" (desktop): consolida e-mail/WhatsApp/GitHub/LinkedIn
             num popover só, em vez de espalhar os três soltos pelo header. */}
@@ -283,14 +281,6 @@ function Header({ sticky = false }: HeaderProps) {
                 </motion.div>
               )}
             </AnimatePresence>
-
-            <div
-              className={`my-2 border-t ${sticky ? 'border-white/10' : 'border-neutral-200 dark:border-neutral-800'}`}
-            />
-
-            <div className="flex items-center justify-center py-1">
-              <ThemeToggle sticky={sticky} />
-            </div>
           </motion.nav>
         )}
       </AnimatePresence>

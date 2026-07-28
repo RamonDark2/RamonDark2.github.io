@@ -82,6 +82,9 @@ export interface Project {
   tag: string | null
   url: string | null
   image?: string
+  // Mockup em iPhone 14 Pro Max — usado no lugar do notebook quando o "Ver ao
+  // vivo" abre em telas de celular, ocupando quase a tela inteira.
+  mobileImage?: string
 }
 
 export const projects: Project[] = [
@@ -93,6 +96,7 @@ export const projects: Project[] = [
     tag: 'Prefeitura de Teresina',
     url: 'https://emprega.teresina.pi.gov.br/',
     image: `${baseUrl}img/Macbook-Air-emprega.teresina.pi.gov.br.png`,
+    mobileImage: `${baseUrl}img/iPhone-14-PRO-MAX-emprega.teresina.pi.gov.br.webp`,
   },
   {
     name: 'Casamento Design',
@@ -102,6 +106,7 @@ export const projects: Project[] = [
     tag: 'Projeto pessoal',
     url: 'https://casamento-design.vercel.app/',
     image: `${baseUrl}img/Macbook-Air-casamento-design.vercel.app.png`,
+    mobileImage: `${baseUrl}img/iPhone-14-PRO-MAX-casamento-design.vercel.app.webp`,
   },
   {
     name: 'Certificado Escolar Digital',
@@ -111,6 +116,7 @@ export const projects: Project[] = [
     tag: 'Prefeitura de Teresina',
     url: 'https://ced.teresina.pi.gov.br/sobre',
     image: `${baseUrl}img/Macbook-Air-ced.teresina.pi.gov.br.png`,
+    mobileImage: `${baseUrl}img/iPhone-14-PRO-MAX-ced.teresina.pi.gov.br.webp`,
   },
   {
     name: 'Orçamento Popular',
@@ -120,6 +126,7 @@ export const projects: Project[] = [
     tag: 'Prefeitura de Teresina',
     url: 'https://op.teresina.pi.gov.br/sobre',
     image: `${baseUrl}img/Macbook-Air-op.teresina.pi.gov.br.png`,
+    mobileImage: `${baseUrl}img/iPhone-14-PRO-MAX-op.teresina.pi.gov.br.webp`,
   },
 ]
 
@@ -144,6 +151,9 @@ export interface ComplementaryExperience {
   highlights: string[]
   image: string
   imageCaption: string
+  // Mockup em iPhone 14 Pro Max — exibido no lugar do notebook em telas de
+  // celular (troca só de imagem via <picture>, sem live embed: ver nota abaixo).
+  mobileImage?: string
   // A Nuvemshop/Tiendanube bloqueia embed vivo via CSP `frame-ancestors`
   // (só permite framing a partir do próprio domínio da plataforma) — por
   // isso aqui é só um link externo, sem LiveMockup, diferente dos projetos
@@ -167,6 +177,7 @@ export const ecommerceExperience: ComplementaryExperience = {
     'Manutenção e evolução de lojas virtuais existentes',
   ],
   image: `${baseUrl}img/Macbook-Air-prolimgel.lojavirtualnuvem.com.br.png`,
+  mobileImage: `${baseUrl}img/iPhone-14-PRO-MAX-prolimgel.lojavirtualnuvem.com.br.webp`,
   imageCaption: 'Prolimgel — loja virtual',
 }
 

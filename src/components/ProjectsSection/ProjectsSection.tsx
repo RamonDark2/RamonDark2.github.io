@@ -25,7 +25,12 @@ function ProjectsSection() {
                 {project.image ? (
                   <div className="mb-6">
                     {project.url ? (
-                      <LiveMockup image={project.image} alt={project.name} url={project.url} />
+                      <LiveMockup
+                        image={project.image}
+                        mobileImage={project.mobileImage}
+                        alt={project.name}
+                        url={project.url}
+                      />
                     ) : (
                       <img
                         src={project.image}

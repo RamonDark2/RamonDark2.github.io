@@ -116,22 +116,32 @@ function ExperienceSection() {
               <div>
                 {ecommerceExperience.url ? (
                   <a href={ecommerceExperience.url} target="_blank" rel="noopener noreferrer" className="block">
+                    <picture>
+                      {ecommerceExperience.mobileImage && (
+                        <source media="(max-width: 767px)" srcSet={ecommerceExperience.mobileImage} />
+                      )}
+                      <img
+                        src={ecommerceExperience.image}
+                        alt={ecommerceExperience.imageCaption}
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full drop-shadow-lg transition-transform duration-500 ease-out hover:scale-[1.02]"
+                      />
+                    </picture>
+                  </a>
+                ) : (
+                  <picture>
+                    {ecommerceExperience.mobileImage && (
+                      <source media="(max-width: 767px)" srcSet={ecommerceExperience.mobileImage} />
+                    )}
                     <img
                       src={ecommerceExperience.image}
                       alt={ecommerceExperience.imageCaption}
                       loading="lazy"
                       decoding="async"
-                      className="w-full drop-shadow-lg transition-transform duration-500 ease-out hover:scale-[1.02]"
+                      className="w-full drop-shadow-lg"
                     />
-                  </a>
-                ) : (
-                  <img
-                    src={ecommerceExperience.image}
-                    alt={ecommerceExperience.imageCaption}
-                    loading="lazy"
-                    decoding="async"
-                    className="w-full drop-shadow-lg"
-                  />
+                  </picture>
                 )}
                 <p className="mt-3 text-center font-sans text-xs uppercase tracking-widest text-neutral-500 dark:text-neutral-400">
                   {ecommerceExperience.imageCaption}
