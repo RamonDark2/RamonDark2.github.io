@@ -144,11 +144,17 @@ export interface ComplementaryExperience {
   highlights: string[]
   image: string
   imageCaption: string
+  // A Nuvemshop/Tiendanube bloqueia embed vivo via CSP `frame-ancestors`
+  // (só permite framing a partir do próprio domínio da plataforma) — por
+  // isso aqui é só um link externo, sem LiveMockup, diferente dos projetos
+  // próprios em ProjectsSection.
+  url?: string
 }
 
 export const ecommerceExperience: ComplementaryExperience = {
   title: 'Desenvolvimento Frontend para E-commerces',
   role: 'Desenvolvedor Frontend Freelancer',
+  url: 'https://prolimgel.lojavirtualnuvem.com.br/',
   summary:
     'Atuação em projetos de desenvolvimento, personalização e manutenção de interfaces para lojas virtuais.',
   highlights: [

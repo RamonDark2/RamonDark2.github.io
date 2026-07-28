@@ -19,7 +19,12 @@ function TalkSection() {
   }, [lightboxPhoto])
 
   return (
-    <section className="border-t border-neutral-200 bg-neutral-100 px-6 py-24 dark:border-neutral-800/60 dark:bg-[#141416]">
+    // overflow-hidden: o LiveMockup dos slides usa rotateX na entrada (3D tilt) —
+    // enquanto ainda não entrou na viewport (whileInView não disparou), o navegador
+    // calcula uma caixa delimitadora rotacionada mais larga que a imagem normal,
+    // o que contava pro scrollWidth da página inteira e dava overflow horizontal
+    // em algumas larguras (~1040px), mesmo com a seção fora da tela.
+    <section className="overflow-hidden border-t border-neutral-200 bg-neutral-100 px-6 py-24 dark:border-neutral-800/60 dark:bg-[#141416]">
       <div className="mx-auto max-w-5xl">
         <SectionHeading eyebrow="05 · Palestra" title={talk.title} className="mb-0" />
 

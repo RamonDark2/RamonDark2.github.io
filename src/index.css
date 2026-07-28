@@ -35,55 +35,59 @@ body {
   }
 }
 
-/* Carrossel de tecnologias (SkillsSection): translateX puro em vez de
-   scroll/JS — barato o suficiente pra não repetir o histórico de lag de
-   scroll que esse projeto já teve. O conteúdo é duplicado 1x no componente;
-   -50% aqui equivale a exatamente uma cópia, fechando o loop sem emenda. */
-@keyframes marquee {
-  from {
-    transform: translateX(-50%);
-  }
+/* Selo giratório da seção de Competências: rotação pura em transform (o mais
+   barato possível pro GPU) — a classe só é aplicada quando a seção está
+   visível (useInView em SkillsSection), então não roda de graça fora da tela. */
+@keyframes badge-spin {
   to {
-    transform: translateX(0%);
+    transform: rotate(360deg);
   }
 }
 
-.animate-marquee {
-  animation: marquee 32s linear infinite;
-}
-
-/* Segunda fileira do carrossel: sentido oposto e duração levemente diferente,
-   pra não parecer um espelho mecânico da primeira. */
-@keyframes marquee-reverse {
-  from {
-    transform: translateX(0%);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-.animate-marquee-reverse {
-  animation: marquee-reverse 38s linear infinite;
-}
-
-.animate-marquee:hover,
-.animate-marquee-reverse:hover {
-  animation-play-state: paused;
-}
-
-/* Pausa os carrosséis quando a seção sai da viewport (classe controlada por
-   useInView no SkillsSection): animação infinita fora da tela é custo de
-   composição contínuo à toa — mesma lição dos blobs do Hero na rodada
-   anterior de correção de lag. */
-.marquee-paused .animate-marquee,
-.marquee-paused .animate-marquee-reverse {
-  animation-play-state: paused;
+.animate-badge-spin {
+  animation: badge-spin 26s linear infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .animate-marquee,
-  .animate-marquee-reverse {
+  .animate-badge-spin {
     animation: none;
+  }
+}
+
+/* Luz viajando pelas linhas conectoras da seção de Competências: anima só
+   offset-distance (roda no compositor, mesma classe de custo de um
+   transform) — nenhum recálculo de layout por frame. Pausa quando a seção
+   sai da tela via a classe .connector-paused (useInView em SkillsSection). */
+@keyframes connector-travel {
+  0% {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  88% {
+    opacity: 1;
+  }
+  100% {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+}
+
+.connector-dot {
+  offset-rotate: 0deg;
+  animation: connector-travel 2.6s ease-in-out infinite;
+}
+
+.connector-paused .connector-dot {
+  animation-play-state: paused;
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .connector-dot {
+    animation: none;
+    opacity: 0;
   }
 }

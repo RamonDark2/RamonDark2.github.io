@@ -21,33 +21,9 @@ const heroPhotoDesktopSrcSet = [
   `${baseUrl}img/ramon-ultrawide-1672px.webp 1672w`,
 ].join(', ')
 
-const REVEAL_EASE = [0.33, 1, 0.68, 1] as const
-
 // Atraso base sincronizado com a cortina do IntroReveal (~1.6s exibição + 0.7s saída):
 // as letras terminam de subir enquanto a cortina revela o Hero.
 const INTRO_OFFSET_S = 1.7
-
-function MaskedName({ text, delay }: { text: string; delay: number }) {
-  return (
-    <h1
-      aria-label={text}
-      className="text-[2.5rem] font-bold leading-[0.95] drop-shadow-[0_2px_16px_rgba(0,0,0,0.45)] sm:text-[4rem] lg:text-[5.5rem]"
-    >
-      {text.split('').map((letter, index) => (
-        <span key={`${letter}-${index}`} aria-hidden className="inline-block overflow-hidden">
-          <motion.span
-            initial={{ y: '110%' }}
-            animate={{ y: 0 }}
-            transition={{ duration: 0.7, ease: REVEAL_EASE, delay: delay + index * 0.045 }}
-            className="inline-block"
-          >
-            {letter}
-          </motion.span>
-        </span>
-      ))}
-    </h1>
-  )
-}
 
 function Hero() {
   const { user, loading } = useGetUsers(GITHUB_USERNAME)
@@ -79,14 +55,11 @@ function Hero() {
 
       <div className="relative z-10 flex min-h-screen flex-col">
         <div className="flex flex-1 flex-col items-center justify-end px-6 pb-20 text-center font-heading text-white">
-          <MaskedName text="JALBERT" delay={INTRO_OFFSET_S} />
-          <MaskedName text="RAMON" delay={INTRO_OFFSET_S + 0.2} />
-
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: 'easeOut', delay: INTRO_OFFSET_S + 0.75 }}
-            className="mt-6 flex max-w-xl flex-col items-center gap-3"
+            className="flex max-w-xl flex-col items-center gap-3"
           >
             <p className="font-sans text-base text-neutral-100">
               Desenvolvedor Frontend na Prodater — Soluções em TI há 2 anos, também atuando
