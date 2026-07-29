@@ -2,7 +2,7 @@ import { Github, Linkedin, MessageCircle } from 'lucide-react'
 
 const WHATSAPP_URL = 'https://wa.me/86994258329'
 const GITHUB_URL = 'https://github.com/Ramonrrc'
-const LINKEDIN_URL = 'https://www.linkedin.com/in/ramon-rodrigues-48459721b/'
+const LINKEDIN_URL = 'https://www.linkedin.com/in/jalbert-ramon-dev'
 
 function Footer() {
   return (

@@ -7,7 +7,7 @@ import { CURSOR_FILL_CLASSNAME } from '../../styles/cursorFill'
 const EMAIL = 'jalbertramon1@gmail.com'
 const WHATSAPP_URL = 'https://wa.me/86994258329'
 const GITHUB_URL = 'https://github.com/Ramonrrc'
-const LINKEDIN_URL = 'https://www.linkedin.com/in/ramon-rodrigues-48459721b/'
+const LINKEDIN_URL = 'https://www.linkedin.com/in/jalbert-ramon-dev'
 
 // Navegação por scroll suave via scrollIntoView — nunca por href="#...":
 // o router do site é baseado em hash, e mudar o hash dispararia o
