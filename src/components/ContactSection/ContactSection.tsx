@@ -7,7 +7,7 @@ const baseUrl = import.meta.env.BASE_URL
 const wavingPhotoSrc = `${baseUrl}img/Ola.png`
 
 const EMAIL = 'jalbertramon1@gmail.com'
-const GITHUB_URL = 'https://github.com/RamonDark2'
+const GITHUB_URL = 'https://github.com/Ramonrrc'
 const LINKEDIN_URL = 'https://www.linkedin.com/in/ramon-rodrigues-48459721b/'
 const WHATSAPP_URL = 'https://wa.me/86994258329'
 const WHATSAPP_MESSAGE = 'Olá, Ramon qual o melhor horário para contato?'

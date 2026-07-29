@@ -16,7 +16,7 @@ import {
 
 const baseUrl = import.meta.env.BASE_URL
 
-export const GITHUB_USERNAME = 'RamonDark2'
+export const GITHUB_USERNAME = 'Ramonrrc'
 
 export interface Skill {
   category: 'Frontend' | 'Backend' | 'Infraestrutura & Práticas'
