@@ -6,6 +6,11 @@ const IMAGE_LINK_SCALE = 2.2
 const SPRING_CONFIG = { damping: 26, stiffness: 300, mass: 0.5 }
 const SCROLL_IDLE_MS = 120
 
+// Mesmo nome do evento disparado em LiveMockup.tsx (duplicado ali com o
+// mesmo comentário cruzado — mesmo padrão do GITHUB_URL local repetido em
+// vários arquivos deste projeto) quando um "ao vivo" abre/fecha.
+const LIVE_MOCKUP_EVENT = 'livemockup-open-change'
+
 function Cursor() {
   const [enabled, setEnabled] = useState(false)
   // mix-blend-mode força o navegador a recompor essa camada contra tudo que
@@ -14,6 +19,19 @@ function Cursor() {
   // página rola por baixo dele, então escondê-lo só nesse instante é
   // imperceptível e evita o custo exatamente quando ele mais pesa.
   const [scrolling, setScrolling] = useState(false)
+  // Enquanto um notebook/celular "ao vivo" está aberto, a bolinha some e o
+  // cursor normal do sistema assume — o iframe embutido é outro documento e
+  // não dispara mousemove no pai, então a bolinha ficava presa ou saltava ao
+  // cruzar a borda dele, um estranhamento visual real.
+  const [pausedByLightbox, setPausedByLightbox] = useState(false)
+
+  useEffect(() => {
+    function onLightboxChange(event: Event) {
+      setPausedByLightbox(Boolean((event as CustomEvent<boolean>).detail))
+    }
+    window.addEventListener(LIVE_MOCKUP_EVENT, onLightboxChange)
+    return () => window.removeEventListener(LIVE_MOCKUP_EVENT, onLightboxChange)
+  }, [])
 
   const x = useMotionValue(-100)
   const y = useMotionValue(-100)
@@ -85,7 +103,7 @@ function Cursor() {
     }
   }, [x, y, scale])
 
-  if (!enabled) return null
+  if (!enabled || pausedByLightbox) return null
 
   return (
     <motion.div

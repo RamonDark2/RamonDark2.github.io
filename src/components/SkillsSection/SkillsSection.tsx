@@ -1,5 +1,6 @@
+import type { CSSProperties } from 'react'
 import { useEffect, useRef, useState } from 'react'
-import { motion, useInView } from 'framer-motion'
+import { motion, useInView, useScroll } from 'framer-motion'
 import {
   Cloud,
   Code2,
@@ -73,15 +74,6 @@ interface Geometry {
   targets: Point[]
 }
 
-// Mede a posição real (em pixels do contêiner) do card principal e dos
-// satélites pra desenhar as linhas exatamente na borda deles — coordenadas
-// fixas ficavam levemente erradas em larguras entre o breakpoint `lg`
-// (1024px) e o teto do `max-w-7xl`, já que a coluna do card principal é em
-// px fixo e come uma fração diferente do contêiner nessa faixa. O viewBox do
-// SVG usa essas mesmas dimensões em pixels (1 unidade = 1px real, sem
-// esticar) — só assim círculos continuam círculos; um viewBox abstrato
-// "0 0 100 100" esticado sem manter proporção (preserveAspectRatio="none")
-// virava oval num contêiner bem mais largo que alto.
 function useConnectorGeometry(
   containerRef: React.RefObject<HTMLDivElement | null>,
   heroRef: React.RefObject<HTMLDivElement | null>,
@@ -120,6 +112,25 @@ function useConnectorGeometry(
   }, [containerRef, heroRef, satelliteRefs])
 
   return geometry
+}
+
+// Altura real (em px) do trilho vertical mobile — usada só pra dar o alcance
+// exato da luz que viaja por ele (ver .rail-dot no index.css), medida do
+// mesmo jeito que a geometria das linhas do desktop (ResizeObserver).
+function useElementHeight(ref: React.RefObject<HTMLElement | null>) {
+  const [height, setHeight] = useState(0)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const measure = () => setHeight(el.clientHeight)
+    measure()
+    const observer = new ResizeObserver(measure)
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [ref])
+
+  return height
 }
 
 function curve(from: Point, to: Point) {
@@ -172,7 +183,7 @@ function ConnectorLines({ geometry, animate }: { geometry: Geometry | null; anim
 
 function RotatingBadge({ spinning }: { spinning: boolean }) {
   return (
-    <div className="pointer-events-none absolute right-0 top-0 hidden h-24 w-24 items-center justify-center sm:flex">
+    <div className="pointer-events-none absolute right-0 top-0 flex h-14 w-14 items-center justify-center sm:h-20 sm:w-20 lg:h-24 lg:w-24">
       <svg viewBox="0 0 100 100" className={`h-full w-full ${spinning ? 'animate-badge-spin' : ''}`}>
         <defs>
           <path id="skills-badge-circle" d="M 50,50 m -38,0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0" />
@@ -188,7 +199,7 @@ function RotatingBadge({ spinning }: { spinning: boolean }) {
           </textPath>
         </text>
       </svg>
-      <Code2 className="absolute h-5 w-5 text-amber-600 dark:text-amber-300" />
+      <Code2 className="absolute h-3.5 w-3.5 text-amber-600 dark:text-amber-300 sm:h-4 sm:w-4 lg:h-5 lg:w-5" />
     </div>
   )
 }
@@ -209,15 +220,19 @@ function Pill({ skill, tone }: { skill: Skill; tone: 'dark' | 'light' }) {
   )
 }
 
-// Marcador do "spine" vertical mobile — mesmo motivo visual da timeline de
-// Experiência, só que nesta seção (dot + trilho) em vez de dot + trilho que
-// se desenha no scroll, pra não duplicar o mesmo efeito de scroll-tracking
-// duas vezes na página.
+// Marcador do "spine" vertical mobile — mesma linguagem visual e o mesmo
+// "pop" de mola da timeline de Experiência (TimelineDot).
 function MobileDot() {
   return (
-    <span className="absolute left-0 top-8 -translate-x-1/2 rounded-full border-2 border-amber-500 bg-white p-0.5 dark:border-amber-300 dark:bg-neutral-900 lg:hidden">
+    <motion.span
+      initial={{ scale: 0 }}
+      whileInView={{ scale: 1 }}
+      viewport={{ once: true, amount: 1 }}
+      transition={{ type: 'spring', damping: 12, stiffness: 260 }}
+      className="absolute left-0 top-8 -translate-x-1/2 rounded-full border-2 border-amber-500 bg-white p-0.5 dark:border-amber-300 dark:bg-neutral-900 lg:hidden"
+    >
       <span className="block h-1.5 w-1.5 rounded-full bg-amber-500 dark:bg-amber-300" />
-    </span>
+    </motion.span>
   )
 }
 
@@ -228,11 +243,16 @@ function SkillsSection() {
   const containerRef = useRef<HTMLDivElement>(null)
   const heroRef = useRef<HTMLDivElement>(null)
   const satelliteRefs = useRef<(HTMLDivElement | null)[]>([])
-  // Pausa a rotação do selo e o redesenho das linhas quando a seção sai da
-  // tela — mesma lição de performance já aplicada ao carrossel de
-  // tecnologias e aos blobs do Hero.
+  const mobileRailRef = useRef<HTMLDivElement>(null)
+
   const inView = useInView(sectionRef, { amount: 0.2 })
   const geometry = useConnectorGeometry(containerRef, heroRef, satelliteRefs)
+  const railHeight = useElementHeight(mobileRailRef)
+
+  const { scrollYProgress: railProgress } = useScroll({
+    target: containerRef,
+    offset: ['start 75%', 'end 65%'],
+  })
 
   return (
     <section
@@ -251,26 +271,29 @@ function SkillsSection() {
         className="pointer-events-none absolute -right-24 bottom-0 h-72 w-72 rounded-full bg-neutral-200/50 blur-3xl dark:bg-neutral-700/20"
       />
 
-      <div className="relative mx-auto max-w-7xl">
+      <div className="relative mx-auto max-w-6xl">
         <RotatingBadge spinning={inView} />
         <SectionHeading eyebrow="02 · Stack" title="Competências Técnicas" className="mb-12 max-w-xl" />
 
         <div ref={containerRef} className="relative">
           <ConnectorLines geometry={geometry} animate={inView} />
 
-          {/* Trilho vertical mobile/tablet (<lg): mesma linguagem visual da
-              rede de linhas do desktop, adaptada a uma pilha de uma coluna
-              só. Some a partir de lg, onde a rede horizontal assume. */}
           <div
+            ref={mobileRailRef}
             aria-hidden
-            className="absolute bottom-10 left-0 top-10 w-px bg-gradient-to-b from-amber-500/50 via-amber-500/30 to-transparent dark:from-amber-300/40 dark:via-amber-300/20 lg:hidden"
-          />
+            className="absolute bottom-10 left-0 top-10 w-px overflow-visible bg-neutral-200 dark:bg-neutral-800 lg:hidden"
+          >
+            <motion.div style={{ scaleY: railProgress }} className="absolute inset-0 origin-top bg-amber-500 dark:bg-amber-300" />
+            {railHeight > 0 && (
+              <span
+                className={`rail-dot absolute left-1/2 top-0 h-2.5 w-2.5 -translate-x-1/2 rounded-full bg-amber-400 shadow-[0_0_8px_2px_rgba(245,158,11,0.55)] dark:bg-amber-300 ${
+                  inView ? '' : 'rail-dot-paused'
+                }`}
+                style={{ '--rail-h': `${railHeight}px` } as CSSProperties}
+              />
+            )}
+          </div>
 
-          {/* z-10 pra ficar acima do SVG das linhas (absolute): sem isso, a
-              ordem de pintura padrão do CSS coloca elementos posicionados
-              (o SVG) por cima do conteúdo em fluxo normal (esta grid),
-              mesmo vindo depois no DOM — as linhas atravessariam os cards
-              em vez de parecerem "chegar até" a borda deles. */}
           <div className="relative z-10 grid gap-6 pl-8 lg:grid-cols-[340px_1fr] lg:gap-16 lg:pl-0">
             {/* Card principal — Frontend */}
             <motion.div

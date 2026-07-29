@@ -13,7 +13,7 @@ const stats = [
 function AboutSection() {
   return (
     <section id="sobre" className="border-t border-neutral-200 bg-neutral-100 px-6 py-24 dark:border-neutral-800/60 dark:bg-[#141416]">
-      <div className="mx-auto max-w-5xl">
+      <div className="mx-auto max-w-6xl">
         <SectionHeading eyebrow="01 · Sobre mim" title={about.heading} />
 
         <div className="max-w-3xl space-y-6">

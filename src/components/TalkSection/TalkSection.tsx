@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ExternalLink, X } from 'lucide-react'
+import { BookOpen, CheckCircle2, X } from 'lucide-react'
 import { talk } from '../../data/sobreMim'
-import { CURSOR_FILL_CLASSNAME } from '../../styles/cursorFill'
 import LiveMockup from '../LiveMockup/LiveMockup'
 import SectionHeading from '../SectionHeading/SectionHeading'
 
@@ -25,47 +24,82 @@ function TalkSection() {
     // o que contava pro scrollWidth da página inteira e dava overflow horizontal
     // em algumas larguras (~1040px), mesmo com a seção fora da tela.
     <section className="overflow-hidden border-t border-neutral-200 bg-neutral-100 px-6 py-24 dark:border-neutral-800/60 dark:bg-[#141416]">
-      <div className="mx-auto max-w-5xl">
-        <SectionHeading eyebrow="05 · Palestra" title={talk.title} className="mb-0" />
+      <div className="mx-auto max-w-6xl">
+        <div className="rounded-3xl border border-neutral-200 bg-white p-8 dark:border-neutral-800 dark:bg-neutral-900 lg:p-10">
+          <div className="grid gap-10 lg:grid-cols-2 lg:items-start">
+            <div>
+              <SectionHeading eyebrow="05 · Palestra" title={talk.title} className="mb-4" />
+              <p className="font-sans text-neutral-700 dark:text-neutral-300">{talk.description}</p>
 
-        <p className="mt-6 max-w-3xl font-sans text-neutral-700 dark:text-neutral-300">
-          {talk.description}
-        </p>
+              <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2">
+                {talk.tags.map((tag, index) => (
+                  <div key={tag.label} className="flex items-center gap-4">
+                    {index > 0 && <span className="h-4 w-px bg-neutral-300 dark:bg-neutral-700" />}
+                    <span className="flex items-center gap-1.5 font-sans text-sm text-neutral-600 dark:text-neutral-300">
+                      <tag.icon className="h-4 w-4 text-amber-600 dark:text-amber-300" />
+                      {tag.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-4 h-px bg-gradient-to-r from-amber-400/70 via-amber-400/15 to-transparent dark:from-amber-300/50 dark:via-amber-300/10" />
 
-        <a
-          href={talk.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`mt-6 inline-flex items-center gap-2 font-sans text-sm font-semibold text-neutral-900 dark:text-amber-300 ${CURSOR_FILL_CLASSNAME}`}
-        >
-          {talk.linkLabel}
-          <ExternalLink className="h-4 w-4" />
-        </a>
+              <div className="mt-6 flex items-center gap-3">
+                <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-amber-100 dark:bg-amber-500/10">
+                  <BookOpen className="h-4 w-4 text-amber-600 dark:text-amber-300" />
+                </span>
+                <h4 className="font-heading text-lg font-bold text-neutral-900 dark:text-neutral-50">
+                  Tópicos abordados
+                </h4>
+              </div>
+              <div className="mt-4 grid grid-cols-2 gap-2.5">
+                {talk.topics.map((topic) => (
+                  <span
+                    key={topic}
+                    className="flex items-center gap-2 rounded-xl border border-neutral-200 bg-neutral-50 px-3 py-2 font-sans text-xs text-neutral-700 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-200 sm:text-sm"
+                  >
+                    <CheckCircle2 className="h-3.5 w-3.5 flex-shrink-0 text-amber-500 dark:text-amber-300 sm:h-4 sm:w-4" />
+                    {topic}
+                  </span>
+                ))}
+              </div>
+            </div>
 
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
-          <div className="md:col-span-3">
-            <LiveMockup image={talk.mockupImage} alt={talk.title} url={talk.url} entrance />
+            <div>
+              <LiveMockup image={talk.mockupImage} alt={talk.title} url={talk.url} entrance />
+            </div>
           </div>
+        </div>
+
+        <div className="mt-6 grid gap-4 sm:grid-cols-3">
           {talk.photos.map((photo, index) => (
-            <motion.button
-              key={photo}
-              type="button"
-              onClick={() => setLightboxPhoto(photo)}
+            <motion.div
+              key={photo.src}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              aria-label={`Ampliar foto da apresentação ${index + 1}`}
-              className="group overflow-hidden rounded-xl shadow-md"
+              className="flex items-center gap-4 overflow-hidden rounded-2xl border border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-900 sm:relative sm:block sm:border-0 sm:bg-transparent sm:dark:bg-transparent"
             >
-              <img
-                src={photo}
-                alt={`Foto da apresentação ${index + 1}`}
-                loading="lazy"
-                decoding="async"
-                className="h-48 w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-              />
-            </motion.button>
+              <button
+                type="button"
+                onClick={() => setLightboxPhoto(photo.src)}
+                aria-label={`Ampliar foto: ${photo.label}`}
+                className="group relative h-24 w-24 flex-shrink-0 overflow-hidden sm:h-48 sm:w-full sm:rounded-2xl"
+              >
+                <img
+                  src={photo.src}
+                  alt={photo.label}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                />
+              </button>
+              <div className="flex items-center gap-2 pr-4 font-sans text-sm font-medium text-neutral-700 dark:text-neutral-200 sm:absolute sm:bottom-3 sm:left-3 sm:w-fit sm:rounded-full sm:bg-black/60 sm:px-3 sm:py-1.5 sm:text-white sm:backdrop-blur-sm">
+                <photo.icon className="h-4 w-4 flex-shrink-0 text-amber-600 sm:text-amber-300" />
+                {photo.label}
+              </div>
+            </motion.div>
           ))}
         </div>
       </div>

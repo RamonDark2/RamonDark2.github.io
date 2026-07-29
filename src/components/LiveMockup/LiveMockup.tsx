@@ -2,8 +2,18 @@ import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ExternalLink, Loader2, MonitorPlay, X } from 'lucide-react'
 
+// Avisa o Cursor.tsx global que um "ao vivo" está aberto, pra ele pausar a
+// bolinha que segue o mouse (sem isso, ela fica presa/salta ao entrar e sair
+// do iframe do site real embutido no mockup — o iframe é outro documento e
+// não dispara mousemove no pai). Mesmo nome duplicado em Cursor.tsx (mesmo
+// padrão do GITHUB_URL local repetido em vários arquivos deste projeto).
+const LIVE_MOCKUP_EVENT = 'livemockup-open-change'
+
 // Área útil da tela dentro dos mockups Macbook-Air-*.png (todos 1600×919 com a
 // mesma moldura — medido por varredura de pixels: tela de x 176→1420, y 54→830).
+// Usado só na visualização "ao vivo" ampliada (liveImage): o card pequeno
+// mostra o combo notebook+celular, mas ao clicar o embed abre neste mockup
+// solo, com a calibração original já testada.
 const SCREEN = {
   left: '11%',
   top: '5.88%',
@@ -32,8 +42,8 @@ const VIRTUAL_WIDTH_PX = 1280
 // largura lógica de um iPhone 14 Pro Max.
 const VIRTUAL_WIDTH_PX_PHONE = 430
 
-// Proporção do mockup é 1600/919 ≈ 1.741 — o notebook ampliado ocupa o máximo
-// da viewport sem estourar nem largura (94vw) nem altura (~88vh · 1.741 ≈ 153vh).
+// Proporção do mockup solo é 1600/919 ≈ 1.741 — o notebook ampliado ocupa o
+// máximo da viewport sem estourar nem largura (94vw) nem altura (~88vh · 1.741 ≈ 153vh).
 const MODAL_WIDTH_CLASS = 'w-[min(94vw,153vh)]'
 
 // Proporção do mockup de celular é 982/1998 ≈ 0.4915 (retrato) — o oposto do
@@ -66,12 +76,16 @@ interface LiveMockupProps {
   // Mockup em iPhone 14 Pro Max — quando informado, substitui o de notebook
   // em telas de celular (card e visualização ao vivo ampliada).
   mobileImage?: string
+  // Notebook solo (sem o celular ao lado) usado só na visualização "ao vivo"
+  // ampliada em telas de desktop — o card pequeno continua mostrando `image`
+  // (o combo notebook+celular). Sem essa prop, a ampliada reaproveita `image`.
+  liveImage?: string
   // Anima a entrada do notebook (leve abertura 3D) na primeira vez em que ele
   // entra na viewport. Desligue quando o pai já anima o card inteiro.
   entrance?: boolean
 }
 
-function LiveMockup({ image, alt, url, mobileImage, entrance = false }: LiveMockupProps) {
+function LiveMockup({ image, alt, url, mobileImage, liveImage, entrance = false }: LiveMockupProps) {
   const [live, setLive] = useState(false)
   const [loaded, setLoaded] = useState(false)
   const screenRef = useRef<HTMLDivElement>(null)
@@ -79,6 +93,7 @@ function LiveMockup({ image, alt, url, mobileImage, entrance = false }: LiveMock
   const isMobile = useIsMobile()
   const showPhone = Boolean(mobileImage) && isMobile
   const displayImage = showPhone ? (mobileImage as string) : image
+  const modalImage = showPhone ? (mobileImage as string) : (liveImage ?? image)
 
   const closeLive = () => {
     setLive(false)
@@ -86,16 +101,22 @@ function LiveMockup({ image, alt, url, mobileImage, entrance = false }: LiveMock
     setScale(0)
   }
 
-  // Com o notebook ampliado aberto: trava o scroll da página e fecha no Esc.
+  // Com o notebook ampliado aberto: trava o scroll da página, fecha no Esc,
+  // e devolve o cursor normal do sistema (a bolinha custom some via o evento
+  // abaixo, então precisa do cursor de verdade de volta nesse meio-tempo).
   useEffect(() => {
     if (!live) return
     document.body.style.overflow = 'hidden'
+    document.body.style.cursor = 'auto'
+    window.dispatchEvent(new CustomEvent(LIVE_MOCKUP_EVENT, { detail: true }))
     function onKeyDown(event: KeyboardEvent) {
       if (event.key === 'Escape') closeLive()
     }
     window.addEventListener('keydown', onKeyDown)
     return () => {
       document.body.style.overflow = ''
+      document.body.style.cursor = ''
+      window.dispatchEvent(new CustomEvent(LIVE_MOCKUP_EVENT, { detail: false }))
       window.removeEventListener('keydown', onKeyDown)
     }
   }, [live])
@@ -117,31 +138,41 @@ function LiveMockup({ image, alt, url, mobileImage, entrance = false }: LiveMock
 
   return (
     <>
-      <motion.div
+      {/* O mockup inteiro é clicável (não só a pílula) — além de aumentar a
+          área de clique, isso ativa o efeito já existente do cursor
+          customizado (Cursor.tsx) que cresce sobre links de imagem, que
+          antes nunca disparava aqui por não haver nenhum <button>/<a>
+          envolvendo a própria imagem. */}
+      <motion.button
+        type="button"
+        onClick={() => setLive(true)}
+        aria-label={`Ver ${alt} ao vivo dentro do mockup`}
         initial={entrance ? { opacity: 0, y: 32, rotateX: 14 } : false}
         whileInView={entrance ? { opacity: 1, y: 0, rotateX: 0 } : undefined}
         viewport={entrance ? { once: true, amount: 0.3 } : undefined}
         transition={{ duration: 0.7, ease: [0.33, 1, 0.68, 1] }}
         style={entrance ? { transformPerspective: 1000 } : undefined}
-        className="group/mockup relative"
+        className="group/mockup relative block w-full appearance-none bg-transparent p-0 text-left"
       >
         <img src={displayImage} alt={alt} loading="lazy" decoding="async" className="w-full drop-shadow-lg" />
 
-        <button
-          type="button"
-          onClick={() => setLive(true)}
-          className={`absolute left-1/2 -translate-x-1/2 -translate-y-1/2 ${showPhone ? 'top-[46%]' : 'top-[44%]'}`}
-          aria-label={`Ver ${alt} ao vivo dentro do mockup`}
+        {/* Em telas de celular a etiqueta fica sempre visível (via `isMobile`
+            medido em JS, não `@media(hover:hover)` — alguns navegadores
+            mobile reais não deixam de "casar" esse media feature de forma
+            confiável) — e o texto muda pra deixar claro que é toque, não
+            hover; com mouse, aparece só no hover do mockup (agora o botão
+            inteiro, não só a pílula). Puramente decorativa (aria-hidden): o
+            botão já tem seu próprio aria-label. */}
+        <span
+          aria-hidden
+          className={`pointer-events-none absolute left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-2 whitespace-nowrap rounded-full bg-black/60 px-4 py-2 font-sans text-xs font-semibold uppercase tracking-wide text-white shadow-lg backdrop-blur-sm transition-all duration-300 ${
+            isMobile ? 'opacity-100' : 'opacity-0 group-hover/mockup:opacity-100'
+          } ${showPhone ? 'top-[46%]' : 'top-[45%]'}`}
         >
-          {/* Em telas de toque (sem hover) o botão fica sempre visível — e o
-              texto muda pra deixar claro que é toque, não hover; com mouse,
-              aparece só no hover do mockup. */}
-          <span className="flex items-center gap-2 whitespace-nowrap rounded-full bg-black/60 px-4 py-2 font-sans text-xs font-semibold uppercase tracking-wide text-white shadow-lg backdrop-blur-sm transition-all duration-300 hover:bg-black/80 group-hover/mockup:opacity-100 [@media(hover:hover)]:opacity-0">
-            <MonitorPlay className="h-4 w-4" />
-            {isMobile ? 'Toque para ver ao vivo' : 'Ver ao vivo'}
-          </span>
-        </button>
-      </motion.div>
+          <MonitorPlay className="h-4 w-4" />
+          {isMobile ? 'Toque para ver ao vivo' : 'Ver ao vivo'}
+        </span>
+      </motion.button>
 
       {/* Notebook ampliado no centro da tela: só o notebook flutuando sobre um
           fundo escurecido (sem caixa de modal), com o site real navegável na
@@ -165,7 +196,7 @@ function LiveMockup({ image, alt, url, mobileImage, entrance = false }: LiveMock
               className={`relative ${showPhone ? MODAL_HEIGHT_CLASS_PHONE : MODAL_WIDTH_CLASS}`}
             >
               <img
-                src={displayImage}
+                src={modalImage}
                 alt={alt}
                 decoding="async"
                 className={showPhone ? 'h-full w-auto drop-shadow-2xl' : 'w-full drop-shadow-2xl'}

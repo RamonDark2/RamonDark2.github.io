@@ -91,3 +91,41 @@ body {
     opacity: 0;
   }
 }
+
+/* Luz viajando pelo trilho vertical mobile da seção de Competências: só
+   transform (translateY), até --rail-h (altura real do trilho, medida em JS
+   e injetada via style) — mesmo custo de compositor das outras animações
+   contínuas do site, nada de recálculo de layout por frame. Pausa fora da
+   tela via .rail-dot-paused (useInView em SkillsSection). */
+@keyframes rail-travel {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  88% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(var(--rail-h, 0px));
+    opacity: 0;
+  }
+}
+
+.rail-dot {
+  animation: rail-travel 2.4s ease-in-out infinite;
+}
+
+.rail-dot-paused {
+  animation-play-state: paused;
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rail-dot {
+    animation: none;
+    opacity: 0;
+  }
+}
