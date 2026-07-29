@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 import { motion, useScroll } from 'framer-motion'
-import { Calendar, MapPin } from 'lucide-react'
+import { Calendar, ExternalLink, MapPin } from 'lucide-react'
 import { ecommerceExperience, experience } from '../../data/sobreMim'
 import SectionHeading from '../SectionHeading/SectionHeading'
 
@@ -203,7 +203,12 @@ function ExperienceSection() {
 
                 <div>
                   {ecommerceExperience.url ? (
-                    <a href={ecommerceExperience.url} target="_blank" rel="noopener noreferrer" className="block">
+                    <a
+                      href={ecommerceExperience.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group relative block"
+                    >
                       <picture>
                         {ecommerceExperience.mobileImage && (
                           <source media="(max-width: 767px)" srcSet={ecommerceExperience.mobileImage} />
@@ -213,9 +218,20 @@ function ExperienceSection() {
                           alt={ecommerceExperience.imageCaption}
                           loading="lazy"
                           decoding="async"
-                          className="w-full rounded-lg drop-shadow-lg transition-transform duration-500 ease-out hover:scale-[1.02]"
+                          className="w-full rounded-lg drop-shadow-lg transition-transform duration-500 ease-out group-hover:scale-[1.02]"
                         />
                       </picture>
+                      {/* Mesmo visual da etiqueta "Ver ao vivo" do LiveMockup —
+                          aqui é só um link externo (sem embed, ver nota do
+                          CSP na interface ComplementaryExperience), mas a
+                          pílula continua sempre visível igual. */}
+                      <span
+                        aria-hidden
+                        className="pointer-events-none absolute left-1/2 top-[45%] flex -translate-x-1/2 -translate-y-1/2 items-center gap-2 whitespace-nowrap rounded-full bg-black/60 px-4 py-2 font-sans text-xs font-semibold uppercase tracking-wide text-white shadow-lg backdrop-blur-sm"
+                      >
+                        <ExternalLink className="h-4 w-4" />
+                        Abrir site
+                      </span>
                     </a>
                   ) : (
                     <picture>

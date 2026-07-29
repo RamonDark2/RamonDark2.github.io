@@ -80,6 +80,7 @@ function ProjectsSection() {
                         liveImage={project.liveImage}
                         alt={project.name}
                         url={project.url}
+                        tiltedArt
                       />
                     ) : (
                       <img

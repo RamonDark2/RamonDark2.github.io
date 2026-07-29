@@ -69,6 +69,15 @@ function useIsMobile() {
   return isMobile
 }
 
+// Os mockups combo (notebook + celular juntos, usados no card pequeno dos
+// projetos) são um render 3D real, não uma captura de frente — o topo da
+// tela sobe da esquerda pra direita (medido por varredura de pixels: y 231
+// em x=400 até y 207 em x=1000, ~2.3° — ver uso de "rotate-[-2.3deg]" mais
+// abaixo). A etiqueta "Ver ao vivo" acompanha esse ângulo pra não parecer um
+// adesivo reto sobre uma tela inclinada. Os mockups solo (Macbook-Air-*.png,
+// usados na ampliada e na palestra) são de frente, sem inclinação nenhuma —
+// por isso essa correção só entra quando `tiltedArt` é true.
+
 interface LiveMockupProps {
   image: string
   alt: string
@@ -80,12 +89,15 @@ interface LiveMockupProps {
   // ampliada em telas de desktop — o card pequeno continua mostrando `image`
   // (o combo notebook+celular). Sem essa prop, a ampliada reaproveita `image`.
   liveImage?: string
+  // `image` é o render combo (notebook + celular, levemente inclinado) em vez
+  // do mockup solo de frente — ver comentário de COMBO_ART_TILT_DEG.
+  tiltedArt?: boolean
   // Anima a entrada do notebook (leve abertura 3D) na primeira vez em que ele
   // entra na viewport. Desligue quando o pai já anima o card inteiro.
   entrance?: boolean
 }
 
-function LiveMockup({ image, alt, url, mobileImage, liveImage, entrance = false }: LiveMockupProps) {
+function LiveMockup({ image, alt, url, mobileImage, liveImage, tiltedArt = false, entrance = false }: LiveMockupProps) {
   const [live, setLive] = useState(false)
   const [loaded, setLoaded] = useState(false)
   const screenRef = useRef<HTMLDivElement>(null)
@@ -156,18 +168,20 @@ function LiveMockup({ image, alt, url, mobileImage, liveImage, entrance = false 
       >
         <img src={displayImage} alt={alt} loading="lazy" decoding="async" className="w-full drop-shadow-lg" />
 
-        {/* Em telas de celular a etiqueta fica sempre visível (via `isMobile`
-            medido em JS, não `@media(hover:hover)` — alguns navegadores
-            mobile reais não deixam de "casar" esse media feature de forma
-            confiável) — e o texto muda pra deixar claro que é toque, não
-            hover; com mouse, aparece só no hover do mockup (agora o botão
-            inteiro, não só a pílula). Puramente decorativa (aria-hidden): o
-            botão já tem seu próprio aria-label. */}
+        {/* Etiqueta sempre visível (não só no hover) tanto no desktop quanto
+            no celular — em telas de toque isso já era assim (medido via
+            `isMobile` em JS, não `@media(hover:hover)`, que alguns
+            navegadores mobile reais não "casam" de forma confiável); o
+            texto também muda pra deixar claro que é toque, não hover. No
+            notebook combo (tiltedArt), a etiqueta acompanha o ângulo real do
+            render 3D (ver comentário de COMBO_ART_TILT_DEG) — sem isso ela
+            fica reta sobre uma tela inclinada, um "adesivo torto". Puramente
+            decorativa (aria-hidden): o botão já tem seu próprio aria-label. */}
         <span
           aria-hidden
-          className={`pointer-events-none absolute left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-2 whitespace-nowrap rounded-full bg-black/60 px-4 py-2 font-sans text-xs font-semibold uppercase tracking-wide text-white shadow-lg backdrop-blur-sm transition-all duration-300 ${
-            isMobile ? 'opacity-100' : 'opacity-0 group-hover/mockup:opacity-100'
-          } ${showPhone ? 'top-[46%]' : 'top-[45%]'}`}
+          className={`pointer-events-none absolute left-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center gap-2 whitespace-nowrap rounded-full bg-black/60 px-4 py-2 font-sans text-xs font-semibold uppercase tracking-wide text-white opacity-100 shadow-lg backdrop-blur-sm transition-all duration-300 ${
+            showPhone ? 'top-[46%]' : 'top-[45%]'
+          } ${tiltedArt && !showPhone ? 'rotate-[-2.3deg]' : ''}`}
         >
           <MonitorPlay className="h-4 w-4" />
           {isMobile ? 'Toque para ver ao vivo' : 'Ver ao vivo'}
