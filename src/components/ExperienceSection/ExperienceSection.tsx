@@ -230,7 +230,7 @@ function ExperienceSection() {
                         className="pointer-events-none absolute left-1/2 top-[45%] flex -translate-x-1/2 -translate-y-1/2 items-center gap-2 whitespace-nowrap rounded-full bg-black/60 px-4 py-2 font-sans text-xs font-semibold uppercase tracking-wide text-white shadow-lg backdrop-blur-sm"
                       >
                         <ExternalLink className="h-4 w-4" />
-                        Abrir site
+                        Abrir link
                       </span>
                     </a>
                   ) : (

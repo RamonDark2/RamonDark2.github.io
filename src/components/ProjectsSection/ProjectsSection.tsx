@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion'
-import { ArrowRight, ExternalLink, Github } from 'lucide-react'
+import { ArrowRight, Github } from 'lucide-react'
 import { projects } from '../../data/sobreMim'
-import { CURSOR_FILL_CLASSNAME } from '../../styles/cursorFill'
 import LiveMockup from '../LiveMockup/LiveMockup'
 import SectionHeading from '../SectionHeading/SectionHeading'
 
@@ -26,7 +25,7 @@ function ProjectsSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.5, delay: (index % 2) * 0.12 }}
-                className="group flex flex-col gap-5 rounded-2xl border border-neutral-200 p-5 transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-1 hover:border-neutral-400 hover:shadow-xl hover:shadow-neutral-200/60 dark:border-neutral-800 dark:hover:border-amber-300/50 dark:hover:shadow-none sm:flex-row sm:items-center sm:gap-5"
+                className="group flex flex-col gap-5 rounded-2xl border border-neutral-200 p-5 transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-1 hover:border-neutral-400 hover:shadow-xl hover:shadow-neutral-200/60 dark:border-neutral-800 dark:hover:border-amber-300/50 dark:hover:shadow-none sm:flex-row sm:items-end sm:gap-5"
               >
                 <div className="flex flex-1 flex-col sm:w-[44%]">
                   <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-neutral-900 dark:bg-black">
@@ -57,18 +56,6 @@ function ProjectsSection() {
                       ))}
                     </div>
                   )}
-
-                  {project.url && (
-                    <a
-                      href={project.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`mt-3 inline-flex items-center gap-1.5 self-start font-sans text-sm font-semibold text-neutral-900 dark:text-amber-300 ${CURSOR_FILL_CLASSNAME}`}
-                    >
-                      Abrir em nova aba
-                      <ExternalLink className="h-3.5 w-3.5" />
-                    </a>
-                  )}
                 </div>
 
                 {project.image && (
@@ -81,6 +68,7 @@ function ProjectsSection() {
                         alt={project.name}
                         url={project.url}
                         tiltedArt
+                        labelBelow
                       />
                     ) : (
                       <img

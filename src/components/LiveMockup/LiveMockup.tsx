@@ -95,9 +95,23 @@ interface LiveMockupProps {
   // Anima a entrada do notebook (leve abertura 3D) na primeira vez em que ele
   // entra na viewport. Desligue quando o pai já anima o card inteiro.
   entrance?: boolean
+  // Move o rótulo "Ver ao vivo" de dentro do notebook (adesivo sobreposto à
+  // tela) para uma legenda abaixo da imagem, alinhada à direita — usado nos
+  // cards de Projetos para liberar a tela do mockup e substituir o antigo
+  // link "Abrir em nova aba".
+  labelBelow?: boolean
 }
 
-function LiveMockup({ image, alt, url, mobileImage, liveImage, tiltedArt = false, entrance = false }: LiveMockupProps) {
+function LiveMockup({
+  image,
+  alt,
+  url,
+  mobileImage,
+  liveImage,
+  tiltedArt = false,
+  entrance = false,
+  labelBelow = false,
+}: LiveMockupProps) {
   const [live, setLive] = useState(false)
   const [loaded, setLoaded] = useState(false)
   const screenRef = useRef<HTMLDivElement>(null)
@@ -168,25 +182,46 @@ function LiveMockup({ image, alt, url, mobileImage, liveImage, tiltedArt = false
       >
         <img src={displayImage} alt={alt} loading="lazy" decoding="async" className="w-full drop-shadow-lg" />
 
-        {/* Etiqueta sempre visível (não só no hover) tanto no desktop quanto
-            no celular — em telas de toque isso já era assim (medido via
-            `isMobile` em JS, não `@media(hover:hover)`, que alguns
-            navegadores mobile reais não "casam" de forma confiável); o
-            texto também muda pra deixar claro que é toque, não hover. No
-            notebook combo (tiltedArt), a etiqueta acompanha o ângulo real do
-            render 3D (ver comentário de COMBO_ART_TILT_DEG) — sem isso ela
-            fica reta sobre uma tela inclinada, um "adesivo torto". Puramente
-            decorativa (aria-hidden): o botão já tem seu próprio aria-label. */}
-        <span
-          aria-hidden
-          className={`pointer-events-none absolute left-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center gap-2 whitespace-nowrap rounded-full bg-black/60 px-4 py-2 font-sans text-xs font-semibold uppercase tracking-wide text-white opacity-100 shadow-lg backdrop-blur-sm transition-all duration-300 ${
-            showPhone ? 'top-[46%]' : 'top-[45%]'
-          } ${tiltedArt && !showPhone ? 'rotate-[-2.3deg]' : ''}`}
-        >
-          <MonitorPlay className="h-4 w-4" />
-          {isMobile ? 'Toque para ver ao vivo' : 'Ver ao vivo'}
-        </span>
+        {!labelBelow && (
+          /* Etiqueta sempre visível (não só no hover) tanto no desktop quanto
+             no celular — em telas de toque isso já era assim (medido via
+             `isMobile` em JS, não `@media(hover:hover)`, que alguns
+             navegadores mobile reais não "casam" de forma confiável); o
+             texto também muda pra deixar claro que é toque, não hover. No
+             notebook combo (tiltedArt), a etiqueta acompanha o ângulo real do
+             render 3D (ver comentário de COMBO_ART_TILT_DEG) — sem isso ela
+             fica reta sobre uma tela inclinada, um "adesivo torto". Puramente
+             decorativa (aria-hidden): o botão já tem seu próprio aria-label. */
+          <span
+            aria-hidden
+            className={`pointer-events-none absolute left-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center gap-2 whitespace-nowrap rounded-full bg-black/60 px-4 py-2 font-sans text-xs font-semibold uppercase tracking-wide text-white opacity-100 shadow-lg backdrop-blur-sm transition-all duration-300 ${
+              showPhone ? 'top-[46%]' : 'top-[45%]'
+            } ${tiltedArt && !showPhone ? 'rotate-[-2.3deg]' : ''}`}
+          >
+            <MonitorPlay className="h-4 w-4" />
+            {isMobile ? 'Toque para ver ao vivo' : 'Ver ao vivo'}
+          </span>
+        )}
       </motion.button>
+
+      {labelBelow && (
+        // Botão próprio (fora do <button> da imagem) com o mesmo visual do
+        // adesivo original — precisa ser um elemento separado, não aninhado,
+        // pra o cursor customizado (Cursor.tsx) reconhecer isso como link de
+        // texto e preencher a bolinha nele, em vez de tratar como o link de
+        // imagem do notebook (que só amplia a bolinha).
+        <div className="mt-3 flex justify-end">
+          <button
+            type="button"
+            onClick={() => setLive(true)}
+            aria-label={`Ver ${alt} ao vivo dentro do mockup`}
+            className="flex items-center gap-2 whitespace-nowrap rounded-full bg-black/60 px-4 py-2 font-sans text-xs font-semibold uppercase tracking-wide text-white shadow-lg backdrop-blur-sm transition-colors hover:bg-black/80"
+          >
+            <MonitorPlay className="h-4 w-4" />
+            {isMobile ? 'Toque para ver ao vivo' : 'Ver ao vivo'}
+          </button>
+        </div>
+      )}
 
       {/* Notebook ampliado no centro da tela: só o notebook flutuando sobre um
           fundo escurecido (sem caixa de modal), com o site real navegável na
