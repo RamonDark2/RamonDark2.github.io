@@ -2,11 +2,28 @@ import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { BookOpen, CheckCircle2, X } from 'lucide-react'
 import { talk } from '../../data/sobreMim'
+import CoverflowCarousel from '../CoverflowCarousel/CoverflowCarousel'
 import LiveMockup from '../LiveMockup/LiveMockup'
 import SectionHeading from '../SectionHeading/SectionHeading'
 
+function getCarouselSize() {
+  const isMobile = window.matchMedia('(max-width: 639px)').matches
+  return isMobile
+    ? { activeWidth: 240, activeHeight: 300, restWidth: 80, restHeight: 100, gap: 12 }
+    : { activeWidth: 480, activeHeight: 340, restWidth: 150, restHeight: 200, gap: 24 }
+}
+
 function TalkSection() {
   const [lightboxPhoto, setLightboxPhoto] = useState<string | null>(null)
+  const [activePhotoIndex, setActivePhotoIndex] = useState(0)
+  const [carouselSize, setCarouselSize] = useState(() => getCarouselSize())
+
+  useEffect(() => {
+    const mql = window.matchMedia('(max-width: 639px)')
+    const onChange = () => setCarouselSize(getCarouselSize())
+    mql.addEventListener('change', onChange)
+    return () => mql.removeEventListener('change', onChange)
+  }, [])
 
   useEffect(() => {
     if (!lightboxPhoto) return
@@ -71,36 +88,28 @@ function TalkSection() {
           </div>
         </div>
 
-        <div className="mt-6 grid gap-4 sm:grid-cols-3">
-          {talk.photos.map((photo, index) => (
-            <motion.div
-              key={photo.src}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="flex items-center gap-4 overflow-hidden rounded-2xl border border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-900 sm:relative sm:block sm:border-0 sm:bg-transparent sm:dark:bg-transparent"
-            >
-              <button
-                type="button"
-                onClick={() => setLightboxPhoto(photo.src)}
-                aria-label={`Ampliar foto: ${photo.label}`}
-                className="group relative h-24 w-24 flex-shrink-0 overflow-hidden sm:h-48 sm:w-full sm:rounded-2xl"
-              >
-                <img
-                  src={photo.src}
-                  alt={photo.label}
-                  loading="lazy"
-                  decoding="async"
-                  className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                />
-              </button>
-              <div className="flex items-center gap-2 pr-4 font-sans text-sm font-medium text-neutral-700 dark:text-neutral-200 sm:absolute sm:bottom-3 sm:left-3 sm:w-fit sm:rounded-full sm:bg-black/60 sm:px-3 sm:py-1.5 sm:text-white sm:backdrop-blur-sm">
-                <photo.icon className="h-4 w-4 flex-shrink-0 text-amber-600 sm:text-amber-300" />
-                {photo.label}
-              </div>
-            </motion.div>
-          ))}
+        <div className="relative mt-6 h-[300px] sm:h-[400px]">
+          <CoverflowCarousel
+            images={talk.photos.map((photo) => ({ srcUrl: photo.src, alt: photo.label }))}
+            activeWidth={carouselSize.activeWidth}
+            activeHeight={carouselSize.activeHeight}
+            restWidth={carouselSize.restWidth}
+            restHeight={carouselSize.restHeight}
+            gap={carouselSize.gap}
+            onActiveClick={(index) => setLightboxPhoto(talk.photos[index].src)}
+            onActiveChange={setActivePhotoIndex}
+          />
+        </div>
+        <div className="mt-4 flex items-center justify-center gap-2 font-sans text-sm font-medium text-neutral-700 dark:text-neutral-200">
+          {(() => {
+            const ActivePhotoIcon = talk.photos[activePhotoIndex].icon
+            return (
+              <>
+                <ActivePhotoIcon className="h-4 w-4 flex-shrink-0 text-amber-600 dark:text-amber-300" />
+                {talk.photos[activePhotoIndex].label}
+              </>
+            )
+          })()}
         </div>
       </div>
 
