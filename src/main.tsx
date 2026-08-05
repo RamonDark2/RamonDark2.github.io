@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { MotionConfig } from 'framer-motion'
 import App from './App'
+import ClickSpark from './components/ClickSpark/ClickSpark'
 import Cursor from './components/Cursor/Cursor'
 import IntroReveal from './components/IntroReveal/IntroReveal'
 import ScrollProgress from './components/ScrollProgress/ScrollProgress'
@@ -15,6 +16,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <IntroReveal />
         <ScrollProgress />
         <Cursor />
+        <ClickSpark />
         <App />
       </MotionConfig>
     </ThemeProvider>
