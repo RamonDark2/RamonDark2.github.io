@@ -60,6 +60,11 @@ function CardNav({ isOpen, cards, ease = 'power3.out' }: CardNavProps) {
   useLayoutEffect(() => {
     const tl = createTimeline()
     tlRef.current = tl
+    // Sem isso, trocar o tema enquanto o painel está aberto recria a
+    // timeline do zero (fechada) mas não avisa `isOpen` — o painel some
+    // visualmente enquanto o estado React ainda acha que está aberto.
+    // Mesmo guard já usado no efeito de resize logo abaixo.
+    if (isOpen) tl?.progress(1)
     return () => {
       tl?.kill()
       tlRef.current = null

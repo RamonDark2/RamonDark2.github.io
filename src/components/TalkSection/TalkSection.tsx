@@ -5,6 +5,7 @@ import { talk } from '../../data/sobreMim'
 import CoverflowCarousel from '../CoverflowCarousel/CoverflowCarousel'
 import LiveMockup from '../LiveMockup/LiveMockup'
 import SectionHeading from '../SectionHeading/SectionHeading'
+import { useTheme } from '../../contexts/ThemeContext'
 
 function getCarouselSize() {
   const isMobile = window.matchMedia('(max-width: 639px)').matches
@@ -14,6 +15,7 @@ function getCarouselSize() {
 }
 
 function TalkSection() {
+  const { theme } = useTheme()
   const [lightboxPhoto, setLightboxPhoto] = useState<string | null>(null)
   const [activePhotoIndex, setActivePhotoIndex] = useState(0)
   const [carouselSize, setCarouselSize] = useState(() => getCarouselSize())
@@ -98,6 +100,8 @@ function TalkSection() {
             gap={carouselSize.gap}
             onActiveClick={(index) => setLightboxPhoto(talk.photos[index].src)}
             onActiveChange={setActivePhotoIndex}
+            arrowColor={theme === 'dark' ? '#000000' : '#FFFFFF'}
+            arrowBackground={theme === 'dark' ? '#FFFFFF' : '#171717'}
           />
         </div>
         <div className="mt-4 flex items-center justify-center gap-2 font-sans text-sm font-medium text-neutral-700 dark:text-neutral-200">
