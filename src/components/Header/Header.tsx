@@ -1,7 +1,9 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ChevronDown, Github, Linkedin, Mail, Menu, MessageCircle, X } from 'lucide-react'
 import ThemeToggle from '../ThemeToggle/ThemeToggle'
+import CardNav, { type CardNavGroup } from '../CardNav/CardNav'
+import { useTheme } from '../../contexts/ThemeContext'
 import { CURSOR_FILL_CLASSNAME } from '../../styles/cursorFill'
 
 const EMAIL = 'jalbertramon1@gmail.com'
@@ -54,7 +56,6 @@ function Header({ sticky = false }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [contactMenuOpen, setContactMenuOpen] = useState(false)
-  const [contactAccordionOpen, setContactAccordionOpen] = useState(false)
   const contactMenuRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -100,6 +101,36 @@ function Header({ sticky = false }: HeaderProps) {
     setMobileMenuOpen(false)
     scrollToSection(target)
   }
+
+  const { theme } = useTheme()
+
+  const cardNavGroups: CardNavGroup[] = useMemo(() => {
+    const isDark = theme === 'dark'
+    return [
+      {
+        label: 'Navegar',
+        bgColor: isDark ? '#171717' : '#f5f5f4',
+        textColor: isDark ? '#f5f5f4' : '#171717',
+        links: NAV_ITEMS.map((item) => ({
+          label: item.label,
+          ariaLabel: `Ir para ${item.label}`,
+          onClick: () => handleNavClick(item.target),
+        })),
+      },
+      {
+        label: 'Fale comigo',
+        bgColor: isDark ? '#78350f' : '#fef3c7',
+        textColor: isDark ? '#fde68a' : '#78350f',
+        links: CONTACT_OPTIONS.map((option) => ({
+          label: option.label,
+          ariaLabel: option.label,
+          href: option.href,
+          external: option.external,
+          onClick: () => setMobileMenuOpen(false),
+        })),
+      },
+    ]
+  }, [theme])
 
   // Só fica sem fundo (direto sobre a foto do Hero) no topo da página. O
   // texto do Header fica sempre claro quando sticky — tanto no topo (sobre a
@@ -212,78 +243,13 @@ function Header({ sticky = false }: HeaderProps) {
         </button>
       </div>
 
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.nav
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.2, ease: 'easeOut' }}
-            className={`absolute left-0 right-0 top-full flex flex-col gap-1 p-3 lg:hidden ${
-              sticky
-                ? 'bg-black/80 backdrop-blur-md'
-                : 'border-b border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-900'
-            }`}
-          >
-            {NAV_ITEMS.map((item) => (
-              <button
-                key={item.target}
-                type="button"
-                onClick={() => handleNavClick(item.target)}
-                className={`w-full rounded-lg px-4 py-3 text-center font-sans text-sm font-medium transition-colors ${
-                  sticky
-                    ? 'text-neutral-200 hover:bg-white/10 hover:text-white'
-                    : 'text-neutral-700 hover:bg-neutral-100 dark:text-neutral-300 dark:hover:bg-neutral-800'
-                }`}
-              >
-                {item.label}
-              </button>
-            ))}
-
-            {/* "Fale comigo" (mobile): sanfona inline com as opções de contato,
-                em vez de um popover flutuante dentro de outro painel. */}
-            <button
-              type="button"
-              onClick={() => setContactAccordionOpen((open) => !open)}
-              aria-expanded={contactAccordionOpen}
-              className={`mx-4 mt-2 justify-center ${ctaClassName}`}
-            >
-              Fale comigo
-              <ChevronDown
-                className={`h-3.5 w-3.5 transition-transform duration-200 ${contactAccordionOpen ? 'rotate-180' : ''}`}
-              />
-            </button>
-            <AnimatePresence>
-              {contactAccordionOpen && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.2, ease: 'easeOut' }}
-                  className="mx-4 mt-2 overflow-hidden rounded-2xl border border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-900"
-                >
-                  {CONTACT_OPTIONS.map((option) => (
-                    <a
-                      key={option.label}
-                      href={option.href}
-                      target={option.external ? '_blank' : undefined}
-                      rel={option.external ? 'noopener noreferrer' : undefined}
-                      onClick={() => {
-                        setContactAccordionOpen(false)
-                        setMobileMenuOpen(false)
-                      }}
-                      className={menuItemClassName}
-                    >
-                      <option.icon className="h-4 w-4 flex-shrink-0" />
-                      <span className="truncate">{option.label}</span>
-                    </a>
-                  ))}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.nav>
-        )}
-      </AnimatePresence>
+      <div
+        className={`absolute left-0 right-0 top-full overflow-hidden lg:hidden ${
+          sticky ? 'bg-black/80 backdrop-blur-md' : 'bg-white dark:bg-neutral-900'
+        }`}
+      >
+        <CardNav isOpen={mobileMenuOpen} cards={cardNavGroups} />
+      </div>
     </motion.header>
   )
 }
