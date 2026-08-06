@@ -165,9 +165,17 @@ function Header({ sticky = false }: HeaderProps) {
       transition={{ duration: 0.6, ease: 'easeOut', delay: STICKY_INTRO_DELAY_S }}
       className={headerClassName}
     >
-      {/* Logo/wordmark — leva ao topo da página, nunca por href="#..." (ver nota acima). */}
-      <button type="button" onClick={scrollToTop} className="shrink-0 transition-opacity hover:opacity-80">
+      {/* Logo/wordmark — leva ao topo da página, nunca por href="#..." (ver nota acima). Segunda
+          imagem (sempre a versão preta) sobreposta e cortada via clip-path: escondida abaixo da
+          borda inferior em repouso, "sobe" cobrindo a logo original no hover — como um líquido
+          preenchendo de baixo pra cima até virar a logo preta por completo. */}
+      <button type="button" onClick={scrollToTop} className="group relative shrink-0">
         <img src={logoSrc} alt="Jalbert Ramon" className="h-9 w-auto sm:h-14" />
+        <img
+          src={`${baseUrl}img/Logo_preto_tight.png`}
+          aria-hidden
+          className="pointer-events-none absolute inset-0 h-9 w-auto [clip-path:inset(100%_0_0_0)] transition-[clip-path] duration-700 ease-out group-hover:[clip-path:inset(0%_0_0_0)] group-focus-visible:[clip-path:inset(0%_0_0_0)] sm:h-14"
+        />
       </button>
 
       <nav className="hidden items-center gap-5 lg:flex lg:pl-32">
