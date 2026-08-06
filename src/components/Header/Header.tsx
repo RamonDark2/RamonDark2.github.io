@@ -4,23 +4,14 @@ import { ChevronDown, Github, Linkedin, Mail, Menu, MessageCircle, X } from 'luc
 import ThemeToggle from '../ThemeToggle/ThemeToggle'
 import CardNav, { type CardNavGroup } from '../CardNav/CardNav'
 import { useTheme } from '../../contexts/ThemeContext'
-import { CURSOR_FILL_CLASSNAME } from '../../styles/cursorFill'
+import { CURSOR_FILL_CLASSNAME, CURSOR_FILL_CONTAINED_CLASSNAME } from '../../styles/cursorFill'
+import { NAV_ITEMS, scrollToSection, scrollToTop } from '../../data/navigation'
 
+const baseUrl = import.meta.env.BASE_URL
 const EMAIL = 'jalbertramon1@gmail.com'
 const WHATSAPP_URL = 'https://wa.me/86994258329'
 const GITHUB_URL = 'https://github.com/Ramonrrc'
 const LINKEDIN_URL = 'https://www.linkedin.com/in/jalbert-ramon-dev'
-
-// Navegação por scroll suave via scrollIntoView — nunca por href="#...":
-// o router do site é baseado em hash, e mudar o hash dispararia o
-// roteamento (caindo na página 404).
-const NAV_ITEMS = [
-  { label: 'Sobre', target: 'sobre' },
-  { label: 'Competências', target: 'competencias' },
-  { label: 'Experiência', target: 'experiencia' },
-  { label: 'Projetos', target: 'projetos' },
-  { label: 'Contato', target: 'contato' },
-]
 
 // Opções do menu "Fale comigo" — consolida os contatos num só botão em vez
 // de espalhar WhatsApp/GitHub/LinkedIn soltos pelo header.
@@ -35,14 +26,6 @@ const CONTACT_OPTIONS = [
 // se a duração da cortina do IntroReveal mudar.
 const STICKY_INTRO_DELAY_S = 2.2
 const SCROLL_THRESHOLD_PX = 80
-
-function scrollToSection(target: string) {
-  document.getElementById(target)?.scrollIntoView({ behavior: 'smooth' })
-}
-
-function scrollToTop() {
-  window.scrollTo({ top: 0, behavior: 'smooth' })
-}
 
 interface HeaderProps {
   // 'sticky': fixo no topo da viewport, sem fundo enquanto a página está no
@@ -132,20 +115,26 @@ function Header({ sticky = false }: HeaderProps) {
     ]
   }, [theme])
 
-  // Só fica sem fundo (direto sobre a foto do Hero) no topo da página. O
-  // texto do Header fica sempre claro quando sticky — tanto no topo (sobre a
-  // foto) quanto rolado (o glass é preto de propósito, não branco, então
-  // precisa do mesmo texto claro, independente do tema do site).
+  // Só fica sem fundo (direto sobre o Hero) no topo da página. O fundo do
+  // Hero ali é sempre uma foto (carrossel), mesmo no tema claro do projeto —
+  // texto/ícones cinza ficam ilegíveis em cima de foto variável, então o
+  // texto do Header continua claro fixo em todo estado sticky (topo e
+  // rolado), independente do tema do site — igual já era antes.
   const overPhoto = sticky && !scrolled
+
+  // Mesma regra de cor do texto que essa logo substitui: sticky é sempre
+  // claro (texto do Header fixo em branco em cima da foto/glass do Hero);
+  // fora do sticky (ex: página de Login) segue o tema do site.
+  const logoSrc = `${baseUrl}img/${sticky || theme === 'dark' ? 'Logo_branco' : 'Logo_preto'}_tight.png`
 
   const headerClassName = [
     'flex w-full flex-row items-center justify-between gap-4 font-sans text-sm',
     sticky
       ? 'fixed inset-x-0 top-0 z-50 text-white transition-[background-color,padding,box-shadow] duration-300'
       : 'relative',
-    overPhoto ? 'bg-transparent px-6 py-6' : '',
-    sticky && !overPhoto ? 'bg-black/50 px-6 py-3 shadow-sm shadow-black/20 backdrop-blur-md' : '',
-    !sticky ? 'px-6 py-6 text-neutral-900 dark:text-neutral-50' : '',
+    overPhoto ? 'bg-transparent px-6 py-2' : '',
+    sticky && !overPhoto ? 'bg-black/50 px-6 py-2 shadow-sm shadow-black/20 backdrop-blur-md' : '',
+    !sticky ? 'px-6 py-2 text-neutral-900 dark:text-neutral-50' : '',
   ]
     .filter(Boolean)
     .join(' ')
@@ -154,12 +143,17 @@ function Header({ sticky = false }: HeaderProps) {
     sticky ? 'text-neutral-300' : 'text-neutral-600 dark:text-neutral-400'
   } ${CURSOR_FILL_CLASSNAME}`
 
-  const iconButtonClassName = sticky
-    ? 'flex h-9 w-9 items-center justify-center rounded-full border border-white/30 text-white transition-colors hover:bg-white/10'
-    : 'flex h-9 w-9 items-center justify-center rounded-full border border-neutral-300 text-neutral-700 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:text-neutral-200 dark:hover:bg-neutral-800'
+  const iconButtonClassName =
+    sticky
+      ? 'flex h-9 w-9 items-center justify-center rounded-full border border-white/30 text-white transition-colors hover:bg-white/10'
+      : 'flex h-9 w-9 items-center justify-center rounded-full border border-neutral-300 text-neutral-700 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:text-neutral-200 dark:hover:bg-neutral-800'
 
-  const ctaClassName =
-    'flex items-center gap-1.5 rounded-full border border-current px-5 py-2 font-semibold uppercase tracking-wide transition-colors hover:bg-neutral-900 hover:text-white dark:hover:bg-white dark:hover:text-neutral-900'
+  // Pílula sólida em âmbar (mesmo acento de CTA usado no Hero/Projetos) em
+  // vez de só contorno — mais destaque que o resto do header. Hover usa o
+  // mesmo mecanismo de preenchimento que nasce do ponto exato onde o mouse
+  // entrou (CURSOR_FILL_CONTAINED_CLASSNAME) que a nav usa, só que contido
+  // dentro da própria pílula em vez de crescer além dela.
+  const ctaClassName = `flex items-center gap-1.5 rounded-full bg-amber-500 px-5 py-2 font-semibold uppercase tracking-wide text-neutral-900 shadow-sm shadow-amber-500/30 dark:bg-amber-400 dark:shadow-amber-400/20 ${CURSOR_FILL_CONTAINED_CLASSNAME}`
 
   const menuItemClassName =
     'flex items-center gap-3 px-4 py-3 font-sans text-sm font-medium text-neutral-700 transition-colors hover:bg-neutral-100 dark:text-neutral-200 dark:hover:bg-neutral-800'
@@ -172,12 +166,8 @@ function Header({ sticky = false }: HeaderProps) {
       className={headerClassName}
     >
       {/* Logo/wordmark — leva ao topo da página, nunca por href="#..." (ver nota acima). */}
-      <button
-        type="button"
-        onClick={scrollToTop}
-        className="font-heading text-lg font-bold tracking-tight transition-opacity hover:opacity-80"
-      >
-        Jalbert Ramon
+      <button type="button" onClick={scrollToTop} className="shrink-0 transition-opacity hover:opacity-80">
+        <img src={logoSrc} alt="Jalbert Ramon" className="h-9 w-auto sm:h-14" />
       </button>
 
       <nav className="hidden items-center gap-5 lg:flex lg:pl-32">

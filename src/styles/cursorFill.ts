@@ -26,3 +26,17 @@ export const CURSOR_FILL_CLASSNAME =
 // com `hover:text-neutral-900` no próprio link para o texto ficar legível.
 export const CURSOR_FILL_LIGHT_CLASSNAME =
   `relative isolate before:absolute before:inset-0 before:-z-10 before:scale-0 ${ORIGIN} before:rounded-xl before:bg-white before:transition-transform before:duration-300 before:ease-out before:content-[''] hover:before:scale-100`
+
+// Mesma cor de preenchimento de CURSOR_FILL_CLASSNAME (acompanha o tema,
+// invertido), mas contido dentro da própria caixa do elemento
+// (before:inset-0 + overflow-hidden no próprio link) em vez de crescer além
+// dela — para botões que já têm fundo/borda próprios (ex: uma pílula sólida
+// de CTA), onde a versão que expande (-inset-x-3/-inset-y-2) passaria do
+// contorno já existente. before:rounded-full de propósito: sem isso, o
+// preenchimento é um retângulo reto só recortado pelo overflow-hidden do
+// botão — no meio da animação (antes de cobrir tudo) isso aparece como um
+// "wipe" quadrado saindo do ponto do mouse, não como uma mancha redonda
+// crescendo. Pensado pra pílulas (rounded-full); se um dia precisar preencher
+// uma caixa de cantos retos, vale criar uma variante com before:rounded-xl.
+export const CURSOR_FILL_CONTAINED_CLASSNAME =
+  `relative isolate overflow-hidden transition-colors before:absolute before:inset-0 before:-z-10 before:scale-0 ${ORIGIN} before:rounded-full before:bg-neutral-900 before:transition-transform before:duration-300 before:ease-out before:content-[''] dark:before:bg-white hover:text-white dark:hover:text-neutral-900 hover:before:scale-100`
