@@ -2,11 +2,6 @@ import { useCallback, useEffect, useMemo, useRef } from 'react'
 import type { CSSProperties } from 'react'
 import { motion, useMotionValue, useReducedMotion, useTransform, type MotionValue } from 'framer-motion'
 
-// Carrossel "cover flow": o item ativo é um card grande centralizado, os
-// demais são réguas finas de tamanho fixo posicionadas pela distância
-// (wrapped) até o índice ativo — avançar é sempre um passo de régua e o
-// loop é contínuo (a descontinuidade do wrap cai onde a opacidade já é 0).
-
 export interface CoverflowImage {
   srcUrl: string
   alt?: string
@@ -35,11 +30,7 @@ export interface CoverflowCarouselProps {
   autoplay?: boolean
   autoplayDirection?: 'leftToRight' | 'rightToLeft'
   transition?: { duration?: number; delay?: number }
-  // Clique num card que já está centralizado — ex: abrir uma lightbox.
-  // Clique num card lateral só centraliza ele, não dispara isso.
   onActiveClick?: (index: number) => void
-  // Dispara sempre que o card centralizado muda (navegação por clique,
-  // seta, teclado ou autoplay).
   onActiveChange?: (index: number) => void
   style?: CSSProperties
 }

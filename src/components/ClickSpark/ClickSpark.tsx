@@ -7,7 +7,7 @@ interface Spark {
   startTime: number
 }
 
-const SPARK_COLOR = '#f59e0b' // amber-500, acompanha o acento do site
+const SPARK_COLOR = '#f59e0b'
 const SPARK_SIZE = 10
 const SPARK_RADIUS = 15
 const SPARK_COUNT = 8
@@ -17,13 +17,6 @@ function easeOutQuad(t: number): number {
   return t * (2 - t)
 }
 
-// Overlay global de "faísca" ao clicar — canvas fixo cobrindo a viewport
-// inteira (ver main.tsx). Diferente do componente original do react-bits,
-// que envolve `children` numa div de altura 100% (pressupõe um pai com
-// altura fixa): aqui a página rola normalmente ao longo de várias seções
-// sem altura fixa em cascata, então em vez de envolver a árvore da
-// aplicação, escuta cliques em `window` (chegam por bubbling de qualquer
-// botão/link/card) e desenha relativo à viewport.
 function ClickSpark() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const sparksRef = useRef<Spark[]>([])
