@@ -129,3 +129,35 @@ body {
     opacity: 0;
   }
 }
+
+/* Onda do ThemeToggle: o SVG desenha o mesmo par de "morros" duas vezes lado
+   a lado (0-100 e 100-200 do viewBox) e desliza -50% da própria largura em
+   loop — como a forma se repete a cada 100 unidades, o ponto de corte do
+   loop cai exatamente sobre outra cópia idêntica da onda, então não dá pra
+   perceber onde ela reinicia. Só transform, roda no compositor. Fica parada
+   até o hover/foco (ver .group:hover no componente), pra não gastar nada
+   sem ninguém olhando. */
+@keyframes theme-toggle-wave-drift {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.theme-toggle-wave {
+  animation: theme-toggle-wave-drift 2.2s linear infinite;
+  animation-play-state: paused;
+}
+
+.group:hover .theme-toggle-wave,
+.group:focus-visible .theme-toggle-wave {
+  animation-play-state: running;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle-wave {
+    animation: none;
+  }
+}
