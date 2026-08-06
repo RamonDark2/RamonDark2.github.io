@@ -182,7 +182,7 @@ function LiveMockup({
       >
         <img src={displayImage} alt={alt} loading="lazy" decoding="async" className="w-full drop-shadow-lg" />
 
-        {!labelBelow && (
+        {(!labelBelow || showPhone) && (
           /* Etiqueta sempre visível (não só no hover) tanto no desktop quanto
              no celular — em telas de toque isso já era assim (medido via
              `isMobile` em JS, não `@media(hover:hover)`, que alguns
@@ -191,7 +191,10 @@ function LiveMockup({
              notebook combo (tiltedArt), a etiqueta acompanha o ângulo real do
              render 3D (ver comentário de COMBO_ART_TILT_DEG) — sem isso ela
              fica reta sobre uma tela inclinada, um "adesivo torto". Puramente
-             decorativa (aria-hidden): o botão já tem seu próprio aria-label. */
+             decorativa (aria-hidden): o botão já tem seu próprio aria-label.
+             No mockup de celular (showPhone), fica sempre centralizada na
+             tela mesmo com labelBelow — não faz sentido ficar solta abaixo
+             do aparelho, o toque já é a própria imagem inteira. */
           <span
             aria-hidden
             className={`pointer-events-none absolute left-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center gap-2 whitespace-nowrap rounded-full bg-black/60 px-4 py-2 font-sans text-xs font-semibold uppercase tracking-wide text-white opacity-100 shadow-lg backdrop-blur-sm transition-all duration-300 ${
@@ -204,12 +207,14 @@ function LiveMockup({
         )}
       </motion.button>
 
-      {labelBelow && (
+      {labelBelow && !showPhone && (
         // Botão próprio (fora do <button> da imagem) com o mesmo visual do
         // adesivo original — precisa ser um elemento separado, não aninhado,
         // pra o cursor customizado (Cursor.tsx) reconhecer isso como link de
         // texto e preencher a bolinha nele, em vez de tratar como o link de
-        // imagem do notebook (que só amplia a bolinha).
+        // imagem do notebook (que só amplia a bolinha). Só no notebook — no
+        // mockup de celular (showPhone) a etiqueta centralizada acima já
+        // cobre o caso, ver condição do overlay logo abaixo.
         <div className="mt-3 flex justify-end">
           <button
             type="button"
