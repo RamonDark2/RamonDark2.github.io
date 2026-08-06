@@ -8,7 +8,7 @@ function ScrollProgress() {
   return (
     <motion.div
       style={{ scaleX: scrollYProgress }}
-      className="fixed left-0 top-0 z-[9998] h-0.5 w-full origin-left bg-neutral-900 will-change-transform dark:bg-amber-300"
+      className="fixed left-0 top-0 z-[9998] h-0.5 w-full origin-left bg-amber-500 will-change-transform dark:bg-amber-400"
     />
   )
 }

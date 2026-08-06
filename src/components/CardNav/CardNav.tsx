@@ -24,7 +24,7 @@ interface CardNavProps {
   ease?: string
 }
 
-const CONTENT_PADDING = 16
+const CONTENT_PADDING = 24
 
 function CardNav({ isOpen, cards, ease = 'power3.out' }: CardNavProps) {
   const navRef = useRef<HTMLDivElement>(null)

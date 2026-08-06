@@ -67,5 +67,11 @@
 
   .nav-card {
     min-height: 120px;
+    /* flex-basis 0 (herdado do desktop) some com o card em coluna dentro de
+       um contêiner de altura automática: o cálculo de "espaço livre" fica
+       ambíguo e pode encolher o card abaixo do necessário pros 4 links de
+       "Fale comigo" caberem, cortando o último (LinkedIn). auto usa a altura
+       de conteúdo real de cada card como base. */
+    flex: 1 1 auto;
   }
 }
