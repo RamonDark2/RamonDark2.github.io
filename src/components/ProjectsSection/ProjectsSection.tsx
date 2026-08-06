@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion'
 import { ArrowRight, Github } from 'lucide-react'
 import { projects } from '../../data/sobreMim'
-import DepthCarousel from '../DepthCarousel/DepthCarousel'
 import LiveMockup from '../LiveMockup/LiveMockup'
 import SectionHeading from '../SectionHeading/SectionHeading'
 
@@ -85,22 +84,6 @@ function ProjectsSection() {
               </motion.div>
             )
           })}
-        </div>
-
-        <div className="mt-10">
-          <p className="mb-4 text-center font-sans text-xs font-semibold uppercase tracking-widest text-neutral-500 dark:text-neutral-400">
-            Vitrine dos projetos
-          </p>
-          <DepthCarousel
-            items={projects
-              .filter((project) => project.image)
-              .map((project) => ({
-                image: project.liveImage ?? project.image!,
-                alt: project.name,
-              }))}
-            cardWidth={340}
-            cardHeight={210}
-          />
         </div>
 
         <div className="mt-10 flex flex-col items-center gap-6 rounded-2xl border border-neutral-200 bg-neutral-50 p-6 dark:border-neutral-800 dark:bg-neutral-900 sm:flex-row sm:justify-between">
