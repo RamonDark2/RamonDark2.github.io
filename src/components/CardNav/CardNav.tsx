@@ -6,9 +6,6 @@ import './CardNav.css'
 export interface CardNavLink {
   label: string
   ariaLabel: string
-  // Link externo/real (renderiza <a>). Sem `href`, renderiza <button> com
-  // `onClick` — usado pra navegação interna por scroll (nunca href="#...",
-  // ver Global Constraints).
   href?: string
   onClick?: () => void
   external?: boolean
@@ -29,11 +26,6 @@ interface CardNavProps {
 
 const CONTENT_PADDING = 16
 
-// Painel expansível adaptado do CardNav do react-bits — só a musculatura de
-// animação (altura do container por GSAP + stagger dos cards) e o visual
-// dos "nav-card" foram reaproveitados. A barra própria do componente
-// original (hambúrguer + logo + CTA) não existe aqui: quem abre/fecha é o
-// hambúrguer que já existe em Header.tsx, via a prop `isOpen`.
 function CardNav({ isOpen, cards, ease = 'power3.out' }: CardNavProps) {
   const navRef = useRef<HTMLDivElement>(null)
   const cardsRef = useRef<(HTMLDivElement | null)[]>([])
@@ -60,16 +52,11 @@ function CardNav({ isOpen, cards, ease = 'power3.out' }: CardNavProps) {
   useLayoutEffect(() => {
     const tl = createTimeline()
     tlRef.current = tl
-    // Sem isso, trocar o tema enquanto o painel está aberto recria a
-    // timeline do zero (fechada) mas não avisa `isOpen` — o painel some
-    // visualmente enquanto o estado React ainda acha que está aberto.
-    // Mesmo guard já usado no efeito de resize logo abaixo.
     if (isOpen) tl?.progress(1)
     return () => {
       tl?.kill()
       tlRef.current = null
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ease, cards])
 
   useLayoutEffect(() => {
@@ -83,13 +70,20 @@ function CardNav({ isOpen, cards, ease = 'power3.out' }: CardNavProps) {
     }
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen])
 
   useLayoutEffect(() => {
     const tl = tlRef.current
     if (!tl) return
     if (isOpen) {
+      // A altura de abertura vem de calculateHeight (função), que o GSAP só
+      // avalia (e depois cacheia) no primeiro render dessa tween — se esse
+      // primeiro cálculo aconteceu antes das fontes do Google Fonts
+      // carregarem (@import em index.css, assíncrono), o scrollHeight medido
+      // fica menor que o real e o link de baixo (LinkedIn) fica cortado pelo
+      // overflow:hidden do card-nav em toda abertura seguinte. invalidate()
+      // descarta esse cache e força medir de novo a cada abertura.
+      tl.invalidate()
       tl.play(0)
     } else {
       tl.reverse()
