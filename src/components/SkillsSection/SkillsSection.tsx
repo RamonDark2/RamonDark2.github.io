@@ -12,6 +12,7 @@ import {
 import { skills } from '../../data/sobreMim'
 import type { Skill } from '../../data/sobreMim'
 import SectionHeading from '../SectionHeading/SectionHeading'
+import TiltedCard from '../TiltedCard/TiltedCard'
 
 function findSkill(name: string): Skill {
   const found = skills.find((skill) => skill.name === name)
@@ -297,32 +298,36 @@ function SkillsSection() {
           <div className="relative z-10 grid gap-6 pl-8 lg:grid-cols-[340px_1fr] lg:gap-16 lg:pl-0">
             {/* Card principal — Frontend */}
             <motion.div
-              ref={heroRef}
+              className="self-center"
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={cardTransition}
-              className="relative isolate overflow-hidden rounded-3xl bg-neutral-900 p-8 text-white shadow-xl dark:bg-black"
             >
-              <MobileDot />
-              <div
-                aria-hidden
-                className="pointer-events-none absolute -bottom-20 left-1/2 h-48 w-48 -translate-x-1/2 rounded-full bg-amber-500/20 blur-3xl"
-              />
-              <div className="relative">
-                <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10">
-                  <LayoutGrid className="h-7 w-7 text-amber-400" />
-                </span>
-                <h3 className="mt-6 font-heading text-2xl font-bold">Frontend</h3>
-                <p className="mt-3 text-sm text-neutral-300">
-                  Interfaces modernas, rápidas e acessíveis, com foco em experiência e performance.
-                </p>
-                <div className="mt-6 flex flex-wrap gap-2">
-                  {heroSkills.map((skill) => (
-                    <Pill key={skill.name} skill={skill} tone="dark" />
-                  ))}
+              <TiltedCard
+                ref={heroRef}
+                className="relative isolate overflow-hidden rounded-3xl bg-neutral-900 p-8 text-white shadow-xl dark:bg-black"
+              >
+                <MobileDot />
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute -bottom-20 left-1/2 h-48 w-48 -translate-x-1/2 rounded-full bg-amber-500/20 blur-3xl"
+                />
+                <div className="relative">
+                  <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10">
+                    <LayoutGrid className="h-7 w-7 text-amber-400" />
+                  </span>
+                  <h3 className="mt-3 font-heading text-2xl font-bold">Frontend</h3>
+                  <p className="mt-3 text-sm text-neutral-300">
+                    Interfaces modernas, rápidas e acessíveis, com foco em experiência e performance.
+                  </p>
+                  <div className="mt-6 flex flex-wrap gap-2">
+                    {heroSkills.map((skill) => (
+                      <Pill key={skill.name} skill={skill} tone="dark" />
+                    ))}
+                  </div>
                 </div>
-              </div>
+              </TiltedCard>
             </motion.div>
 
             {/* Satélites */}
@@ -332,28 +337,31 @@ function SkillsSection() {
                 return (
                   <motion.div
                     key={group.title}
-                    ref={(el) => {
-                      satelliteRefs.current[index] = el
-                    }}
                     initial={{ opacity: 0, y: 24 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.3 }}
                     transition={{ ...cardTransition, delay: 0.15 + index * 0.1 }}
-                    className="relative rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm transition-shadow duration-300 hover:shadow-md dark:border-neutral-700 dark:bg-neutral-800"
                   >
-                    <MobileDot />
-                    <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-neutral-100 dark:bg-neutral-700">
-                      <GroupIcon className="h-5 w-5 text-amber-600 dark:text-amber-300" />
-                    </span>
-                    <h4 className="mt-4 font-heading text-base font-bold text-neutral-900 dark:text-neutral-50">
-                      {group.title}
-                    </h4>
-                    <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-300">{group.description}</p>
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {group.items.map((skill) => (
-                        <Pill key={skill.name} skill={skill} tone="light" />
-                      ))}
-                    </div>
+                    <TiltedCard
+                      ref={(el) => {
+                        satelliteRefs.current[index] = el
+                      }}
+                      className="relative rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm transition-shadow duration-300 hover:shadow-md dark:border-neutral-700 dark:bg-neutral-800"
+                    >
+                      <MobileDot />
+                      <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-neutral-100 dark:bg-neutral-700">
+                        <GroupIcon className="h-5 w-5 text-amber-600 dark:text-amber-300" />
+                      </span>
+                      <h4 className="mt-4 font-heading text-base font-bold text-neutral-900 dark:text-neutral-50">
+                        {group.title}
+                      </h4>
+                      <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-300">{group.description}</p>
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        {group.items.map((skill) => (
+                          <Pill key={skill.name} skill={skill} tone="light" />
+                        ))}
+                      </div>
+                    </TiltedCard>
                   </motion.div>
                 )
               })}
